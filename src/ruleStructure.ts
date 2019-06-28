@@ -1,6 +1,19 @@
 import { createRuleString } from './ruleString'
 import { RuleNode, RuleNodeFactory, RuleString } from './types'
 
+/**
+ * Defines multiple properties with their own rules.
+ *
+ * ```
+ * node(props({ one: node(), two: node() }))
+ * ```
+ *
+ * is the same as
+ *
+ * ```
+ * { "one": { }, "two": { } }
+ * ```
+ */
 const props = (node: RuleNode): RuleNodeFactory => otherNode => {
   if ('$other' in node) {
     throw new Error('props are already enforced on node')
@@ -19,6 +32,19 @@ const props = (node: RuleNode): RuleNodeFactory => otherNode => {
   }
 }
 
+/**
+ * Defines a parameter which you can use for inner rules.
+ *
+ * ```
+ * node(param('$id', $id => node(validate(equal($id, auth.uid))) ))
+ * ```
+ *
+ * is the same as
+ *
+ * ```
+ * { "$id": { ".validate": "$id === auth.uid" } }
+ * ```
+ */
 const param = (key: string, fn: (key: RuleString) => RuleNode): RuleNodeFactory => otherNode => {
   if (!key.startsWith('$')) {
     throw new Error(`parameter key "${key}" must start with "$"`)

@@ -1,5 +1,10 @@
 import { PrimitiveOrExpression, RuleExpression } from './types'
 
+/**
+ * Converts a `RuleExpression` to its JSON string form.
+ *
+ * `toJSONString(equal(a, b))` renders `"(a === b)"`
+ */
 const toJSONString = <T>(a: PrimitiveOrExpression<T> | string[]): string => {
   if (typeof a === 'function') {
     return `${(a as RuleExpression<T>)()}`

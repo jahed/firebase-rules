@@ -29,3 +29,7 @@ export type RuleDataSnapshot<ValueType> = {
   hasChildren: (keys: string[]) => RuleExpression<boolean>;
   child: <ChildValueType> (...parts: PrimitiveOrExpression<string>[]) => RuleDataSnapshot<ChildValueType>;
 }
+
+export type RuleAuth = {
+  uid: RuleExpression<string>;
+}

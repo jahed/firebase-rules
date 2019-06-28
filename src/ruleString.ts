@@ -2,7 +2,8 @@ import { toJSONString } from './ruleSerialisation'
 import { RuleString } from './types'
 
 /**
- * See:
+ * A representation of a Firebase Rule String.
+ *
  * https://firebase.google.com/docs/reference/security/database#string_properties
  */
 const createRuleString = (name: string): RuleString => {

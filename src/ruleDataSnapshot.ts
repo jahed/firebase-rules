@@ -4,7 +4,14 @@ import { allOf } from './ruleOperators'
 import { createRuleString } from './ruleString'
 
 /**
- * See
+ * Creates a representation of a Firebase RuleDataSnapshots for use in rules.
+ *
+ * Note that `val()` is not type-specific. The only type of `val()` that has an
+ * interface is `String`. To use those interfaces, use `isString`.
+ *
+ * `data.isString(val => lessThan(val.length, 100))` is the same as
+ * `data.isString() && data.val().length < 100`.
+ *
  * https://firebase.google.com/docs/reference/security/database#ruledatasnapshot_methods
  */
 const createRuleDataSnapshot = <ValueType> (name: string): RuleDataSnapshot<ValueType> => ({

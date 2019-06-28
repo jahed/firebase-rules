@@ -1,24 +1,40 @@
+import { createRuleAuth } from './ruleAuth'
 import { createRuleDataSnapshot } from './ruleDataSnapshot'
-import { createRuleString } from './ruleString'
-import { RuleExpression } from './types'
+import { RuleAuth, RuleExpression } from './types'
 
 /**
- * See:
- * https://firebase.google.com/docs/reference/security/database#variables
+ * Representation of `auth` for use in rule expressions.
+ *
+ * https://firebase.google.com/docs/reference/security/database#auth
  */
+const auth: RuleAuth = createRuleAuth('auth')
 
-type Auth = {
-  uid: RuleExpression<string>;
-}
-
-const auth: Auth = {
-  uid: createRuleString('auth.uid')
-}
-
+/**
+ * Representation of `now` for use in rule expressions.
+ *
+ * https://firebase.google.com/docs/reference/security/database#now
+ */
 const now: RuleExpression<number> = () => 'now'
 
-const newData = createRuleDataSnapshot('newData')
-const data = createRuleDataSnapshot('data')
+/**
+ * Representation of `root` for use in rule expressions.
+ *
+ * https://firebase.google.com/docs/reference/security/database#root
+ */
 const root = createRuleDataSnapshot('root')
+
+/**
+ * Representation of `newData` for use in rule expressions.
+ *
+ * https://firebase.google.com/docs/reference/security/database#newdata
+ */
+const newData = createRuleDataSnapshot('newData')
+
+/**
+ * Representation of `data` for use in rule expressions.
+ *
+ * https://firebase.google.com/docs/reference/security/database#data
+ */
+const data = createRuleDataSnapshot('data')
 
 export { newData, data, root, now, auth }
