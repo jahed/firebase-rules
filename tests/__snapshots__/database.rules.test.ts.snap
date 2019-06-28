@@ -1,0 +1,317 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`json rules are up-to-date 1`] = `
+Object {
+  "rules": Object {
+    "$other": Object {
+      ".validate": false,
+    },
+    "app": Object {
+      "$other": Object {
+        ".validate": false,
+      },
+      ".read": true,
+      ".write": "(auth.uid === \\"frontiernav-server\\")",
+      "maintenance": Object {
+        "$other": Object {
+          ".validate": false,
+        },
+        "enabled": Object {
+          ".validate": "newData.isBoolean()",
+        },
+        "message": Object {
+          ".validate": "newData.isString()",
+        },
+      },
+      "postDelay": Object {
+        ".validate": "newData.isNumber()",
+      },
+      "update": Object {
+        "$other": Object {
+          ".validate": false,
+        },
+        "force": Object {
+          ".validate": "newData.isBoolean()",
+        },
+        "timestamp": Object {
+          ".validate": "newData.isNumber()",
+        },
+        "version": Object {
+          ".validate": "newData.isString()",
+        },
+      },
+    },
+    "bookmarks": Object {
+      "$userId": Object {
+        "$pathname": Object {
+          "$other": Object {
+            ".validate": false,
+          },
+          ".validate": "newData.hasChildren([\\"name\\",\\"pathname\\",\\"created_at\\"])",
+          "created_at": Object {
+            ".validate": "(newData.isNumber() && (!data.exists() || (data.val() === newData.val())))",
+          },
+          "name": Object {
+            ".validate": "(newData.isString() && ((newData.val().length > 0) && (newData.val().length < 120)))",
+          },
+          "pathname": Object {
+            ".validate": "(newData.isString() && ((newData.val().length > 0) && (newData.val().length < 1000)))",
+          },
+        },
+        ".read": "($userId === auth.uid)",
+        ".validate": "root.child(\\"users/\\" + $userId).exists()",
+        ".write": "($userId === auth.uid)",
+      },
+    },
+    "completedNodes": Object {
+      "$userId": Object {
+        "$gameId": Object {
+          "$nodeId": Object {
+            ".validate": "(newData.isNumber() && (!data.exists() || (data.val() === newData.val())))",
+            ".write": "($userId === auth.uid)",
+          },
+          ".read": true,
+          ".validate": "root.child(\\"games/\\" + $gameId).exists()",
+        },
+        ".validate": "root.child(\\"users/\\" + $userId).exists()",
+      },
+    },
+    "gamePosts": Object {
+      "$gameId": Object {
+        "$postId": Object {
+          ".validate": "(!data.exists() && (newData.val() === now))",
+          ".write": "((root.child(\\"posts/\\" + $postId + \\"/userId\\").val() === auth.uid) && (root.child(\\"posts/\\" + $postId + \\"/gameId\\").val() === $gameId))",
+        },
+        ".indexOn": Array [
+          ".value",
+        ],
+        ".read": true,
+        ".validate": "root.child(\\"games/\\" + $gameId).exists()",
+      },
+    },
+    "gameUserPosts": Object {
+      "$gameId": Object {
+        "$userId": Object {
+          "$postId": Object {
+            ".validate": "(!data.exists() && (newData.val() === now))",
+            ".write": "((root.child(\\"posts/\\" + $postId + \\"/userId\\").val() === auth.uid) && (root.child(\\"posts/\\" + $postId + \\"/gameId\\").val() === $gameId))",
+          },
+          ".indexOn": Array [
+            ".value",
+          ],
+          ".read": true,
+          ".validate": "root.child(\\"users/\\" + $userId).exists()",
+        },
+        ".validate": "root.child(\\"games/\\" + $gameId).exists()",
+      },
+    },
+    "gameUsers": Object {
+      "$gameId": Object {
+        "$userId": Object {
+          ".validate": "(newData.isNumber() && (!data.exists() || (newData.val() > data.val())))",
+          ".write": "($userId === auth.uid)",
+        },
+        ".indexOn": Array [
+          ".value",
+        ],
+        ".read": true,
+        ".validate": "root.child(\\"games/\\" + $gameId).exists()",
+      },
+    },
+    "games": Object {
+      "$gameId": Object {
+        ".read": false,
+        ".validate": "(newData.val() === true)",
+        ".write": false,
+      },
+    },
+    "notes": Object {
+      "$userId": Object {
+        "$other": Object {
+          ".validate": false,
+        },
+        ".read": "($userId === auth.uid)",
+        ".validate": "(root.child(\\"users/\\" + $userId).exists() && newData.hasChildren([\\"text\\",\\"updated_at\\"]))",
+        ".write": "($userId === auth.uid)",
+        "text": Object {
+          ".validate": "(newData.isString() && (newData.val().length < 1001))",
+        },
+        "updated_at": Object {
+          ".validate": "newData.isNumber()",
+        },
+      },
+    },
+    "postReplies": Object {
+      "$postId": Object {
+        "$replyId": Object {
+          ".validate": "(!data.exists() && (newData.val() === now))",
+          ".write": "((root.child(\\"posts/\\" + $replyId + \\"/userId\\").val() === auth.uid) && (root.child(\\"posts/\\" + $replyId + \\"/parentId\\").val() === $postId))",
+        },
+        ".indexOn": Array [
+          ".value",
+        ],
+        ".read": true,
+        ".validate": "root.child(\\"posts/\\" + $postId).exists()",
+      },
+    },
+    "postRequests": Object {
+      "$userId": Object {
+        "$other": Object {
+          ".validate": false,
+        },
+        ".read": "($userId === auth.uid)",
+        ".validate": "(newData.hasChildren([\\"createdAt\\"]) && (!data.exists() || (data.child(\\"createdAt\\").val() < (now - root.child(\\"app/postDelay\\").val()))))",
+        ".write": "($userId === auth.uid)",
+        "createdAt": Object {
+          ".validate": "(newData.val() === now)",
+        },
+        "postId": Object {
+          ".validate": "!root.child(\\"posts/\\" + newData.val()).exists()",
+        },
+      },
+    },
+    "posts": Object {
+      "$postId": Object {
+        "$other": Object {
+          ".validate": false,
+        },
+        ".read": true,
+        ".validate": "(!data.exists() && newData.hasChildren([\\"createdAt\\",\\"updatedAt\\",\\"userId\\",\\"gameId\\",\\"body\\"]))",
+        ".write": "((newData.child(\\"userId\\").val() === auth.uid) && (root.child(\\"postRequests/\\" + auth.uid + \\"/postId\\").val() === $postId))",
+        "body": Object {
+          ".validate": "(newData.isString() && ((newData.val().length > 0) && (newData.val().length < 1024)))",
+        },
+        "createdAt": Object {
+          ".validate": "((data.exists() && (newData.val() === data.val())) || (!data.exists() && (newData.val() === now)))",
+        },
+        "gameId": Object {
+          ".validate": "((data.exists() && (newData.val() === data.val())) || (!data.exists() && root.child(\\"games/\\" + newData.val()).exists()))",
+        },
+        "parentId": Object {
+          ".validate": "((root.child(\\"posts/\\" + $postId).exists() && (newData.val() === data.val())) || (!root.child(\\"posts/\\" + $postId).exists() && (!newData.exists() || root.child(\\"posts/\\" + newData.val()).exists())))",
+        },
+        "updatedAt": Object {
+          ".validate": "(newData.val() === now)",
+        },
+        "userId": Object {
+          ".validate": "((data.exists() && (newData.val() === data.val())) || (!data.exists() && root.child(\\"users/\\" + newData.val()).exists()))",
+        },
+      },
+    },
+    "preferences": Object {
+      "$userId": Object {
+        "$other": Object {
+          ".validate": false,
+        },
+        ".read": "($userId === auth.uid)",
+        ".validate": "root.child(\\"users/\\" + $userId).exists()",
+        ".write": "($userId === auth.uid)",
+        "audio": Object {
+          ".validate": "root.child(\\"users/\\" + $userId).exists()",
+        },
+        "editor": Object {
+          ".validate": "newData.isBoolean()",
+        },
+        "hide_presence": Object {
+          ".validate": "newData.isBoolean()",
+        },
+        "locale": Object {
+          ".validate": "(newData.isString() && (newData.val().length === 2))",
+        },
+        "quality_id": Object {
+          ".validate": "(newData.isString() && (newData.val().length < 10))",
+        },
+      },
+    },
+    "probeGuides": Object {
+      "$userId": Object {
+        "$probe_guide": Object {
+          "$other": Object {
+            ".validate": false,
+          },
+          ".validate": "newData.hasChildren([\\"name\\",\\"siteProbeMap\\"])",
+          "name": Object {
+            ".validate": "(newData.isString() && ((newData.val().length > 0) && (newData.val().length < 50)))",
+          },
+          "siteProbeMap": Object {
+            "$siteNumber": Object {
+              ".validate": "($siteNumber.matches(/^[12345]\\\\\\\\d{2}$/) && newData.isNumber())",
+            },
+          },
+        },
+        ".read": true,
+        ".validate": "root.child(\\"users/\\" + $userId).exists()",
+        ".write": "($userId === auth.uid)",
+      },
+    },
+    "userGames": Object {
+      "$userId": Object {
+        "$gameId": Object {
+          "$other": Object {
+            ".validate": false,
+          },
+          ".validate": "root.child(\\"games/\\" + $gameId).exists()",
+          ".write": "($userId === auth.uid)",
+          "playState": Object {
+            "$other": Object {
+              ".validate": false,
+            },
+            "body": Object {
+              ".validate": "(newData.isString() && ((newData.val().length < 201) && !newData.val().contains(\\"\\\\n\\")))",
+            },
+            "current": Object {
+              ".validate": "(newData.isString() && (newData.val().matches(/^[a-z-]+$/) && (newData.val().length < 32)))",
+            },
+            "updatedAt": Object {
+              ".validate": "newData.isNumber()",
+            },
+          },
+        },
+        ".read": true,
+        ".validate": "root.child(\\"users/\\" + $userId).exists()",
+      },
+    },
+    "userPosts": Object {
+      "$userId": Object {
+        "$postId": Object {
+          ".validate": "(!data.exists() && (newData.val() === now))",
+          ".write": "(($userId === auth.uid) && (root.child(\\"posts/\\" + $postId + \\"/userId\\").val() === auth.uid))",
+        },
+        ".indexOn": Array [
+          ".value",
+        ],
+        ".read": true,
+        ".validate": "root.child(\\"users/\\" + $userId).exists()",
+      },
+    },
+    "users": Object {
+      "$userId": Object {
+        "$other": Object {
+          ".validate": false,
+        },
+        ".validate": "newData.hasChildren([\\"name\\",\\"created_at\\"])",
+        ".write": "($userId === auth.uid)",
+        "about": Object {
+          ".validate": "(!newData.exists() || (newData.isString() && (newData.val().length < 140)))",
+        },
+        "avatar_id": Object {
+          ".validate": "(newData.isString() && (newData.val().matches(/^[0-9a-z-]+$/) && (newData.val().length < 32)))",
+        },
+        "created_at": Object {
+          ".validate": "(newData.isNumber() && (!data.exists() || (data.val() === newData.val())))",
+        },
+        "hue": Object {
+          ".validate": "(newData.isNumber() && ((newData.val() > -1) && (newData.val() < 360)))",
+        },
+        "location": Object {
+          ".validate": "(!newData.exists() || (newData.isString() && (newData.val().length < 32)))",
+        },
+        "name": Object {
+          ".validate": "(newData.isString() && ((newData.val().length > 0) && (newData.val().length < 24)))",
+        },
+      },
+      ".read": true,
+    },
+  },
+}
+`;

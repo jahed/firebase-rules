@@ -1,0 +1,47 @@
+{
+  "name": "@jahed/firebase-rules",
+  "version": "0.1.0",
+  "description": "A type-safe Firebase Real-time Database Security Rules builder.",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "es",
+    "docs"
+  ],
+  "sideEffects": false,
+  "author": "Jahed Ahmed",
+  "license": "MIT",
+  "repository": "https://github.com/jahed/firebase-rules",
+  "scripts": {
+    "lint": "tslint --project tsconfig.json",
+    "test": "jest",
+    "build:lib": "rimraf lib && tsc",
+    "build:es": "rimraf es && tsc --outDir ./es/ --target es6 --module es6",
+    "build:docs": "rimraf docs && typedoc --theme default --out docs --mode file",
+    "push:git": "git push --follow-tags",
+    "push:docs": "bash -i ./publish-docs.sh",
+    "ready": "yarn lint && yarn test && yarn build:lib && yarn build:es && yarn build:docs",
+    "deploy": "yarn ready && yarn publish && yarn push:git && yarn push:docs",
+    "deps": "yarn upgrade-interactive --latest && yarn upgrade && git add yarn.lock '*package.json' && git commit -m 'build(deps): upgrade dependencies'"
+  },
+  "devDependencies": {
+    "@types/jest": "24.0.13",
+    "@types/node": "12.0.5",
+    "jest": "24.8.0",
+    "rimraf": "2.6.3",
+    "ts-jest": "24.0.2",
+    "tslint": "5.17.0",
+    "tslint-config-standard": "8.0.1",
+    "typedoc": "0.14.2",
+    "typescript": "3.5.1"
+  },
+  "keywords": [
+    "firebase",
+    "database",
+    "rules",
+    "builder",
+    "type"
+  ]
+}
