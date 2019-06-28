@@ -1,5 +1,5 @@
 import { rules } from './database.rules'
 
 test('json rules are up-to-date', () => {
-  expect(rules()).toMatchSnapshot()
+  expect(JSON.stringify(rules(), null, 2)).toMatchSnapshot()
 })

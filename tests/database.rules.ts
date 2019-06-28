@@ -17,7 +17,7 @@ const rules = (): Rules => ({
         postDelay: node(validate(newData.isNumber()))
       }),
       read(allowAll),
-      write(equal(auth.uid, 'frontiernav-server'))
+      write(equal(auth.uid, 'service-admin'))
     ),
     bookmarks: node(
       param('$userId', $userId => node(
