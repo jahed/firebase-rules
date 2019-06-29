@@ -46,13 +46,12 @@ const rules = {
           name: node(validate(
             newData.isString(val => between(val.length, 0, 24))
           )),
-          created_at: node(validate(allOf(
-            newData.isNumber(),
-            oneOf(
+          created_at: node(validate(
+            newData.isNumber(newVal => oneOf(
               not(data.exists()),
-              equal(data.val(), newData.val())
-            )
-          )))
+              data.isNumber(val => equal(val, newVal))
+            ))
+          ))
         }),
         write(equal($userId, auth.uid)),
         validate(newData.hasChildren(['name', 'created_at']))
@@ -96,7 +95,7 @@ above will look like this in JSON:
           ".validate": "(newData.isString() && ((newData.val().length > 0) && (newData.val().length < 24)))"
         },
         "created_at": {
-          ".validate": "(newData.isNumber() && (!data.exists() || (data.val() === newData.val())))"
+          ".validate": "(newData.isNumber() && (!data.exists() || (data.isNumber() && (data.val() === newData.val()))))"
         },
         "$other": {
           ".validate": false
