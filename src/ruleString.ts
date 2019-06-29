@@ -19,4 +19,11 @@ const createRuleString = (name: string): RuleString => {
   return str as RuleString
 }
 
-export { createRuleString }
+const createRuleStringArray = (name: string): RuleString[] => {
+  const arr: RuleString[] = []
+  return new Proxy(arr, {
+    get: (_target, index) => createRuleString(`${name}[${String(index)}]`)
+  })
+}
+
+export { createRuleString, createRuleStringArray }

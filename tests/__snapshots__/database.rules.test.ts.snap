@@ -309,6 +309,83 @@ exports[`json rules are up-to-date 1`] = `
         \\".validate\\": \\"(newData.hasChildren([\\\\\\"createdAt\\\\\\"]) && (!data.exists() || (data.child(\\\\\\"createdAt\\\\\\").isNumber() && (root.child(\\\\\\"app/postDelay\\\\\\").isNumber() && (data.child(\\\\\\"createdAt\\\\\\").val() < (now - root.child(\\\\\\"app/postDelay\\\\\\").val()))))))\\"
       }
     },
+    \\"authTest\\": {
+      \\"uid\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.uid))\\"
+      },
+      \\"provider\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.provider))\\"
+      },
+      \\"$other\\": {
+        \\".validate\\": false
+      }
+    },
+    \\"authTokenTest\\": {
+      \\"email\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.email))\\"
+      },
+      \\"email_verified\\": {
+        \\".validate\\": \\"(newData.isBoolean() && (newData.val() === auth.token.email_verified))\\"
+      },
+      \\"phone_number\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.phone_number))\\"
+      },
+      \\"name\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.name))\\"
+      },
+      \\"sub\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.sub))\\"
+      },
+      \\"iss\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.iss))\\"
+      },
+      \\"aud\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.aud))\\"
+      },
+      \\"auth_time\\": {
+        \\".validate\\": \\"(newData.isNumber() && (newData.val() === auth.token.auth_time))\\"
+      },
+      \\"iat\\": {
+        \\".validate\\": \\"(newData.isNumber() && (newData.val() === auth.token.iat))\\"
+      },
+      \\"exp\\": {
+        \\".validate\\": \\"(newData.isNumber() && (newData.val() === auth.token.exp))\\"
+      },
+      \\"$other\\": {
+        \\".validate\\": false
+      }
+    },
+    \\"authTokenFirebaseTest\\": {
+      \\"sign_in_provider\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.firebase.sign_in_provider))\\"
+      },
+      \\"$other\\": {
+        \\".validate\\": false
+      }
+    },
+    \\"authTokenFirebaseIdentitiesTest\\": {
+      \\"email\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.firebase[\\\\\\"email\\\\\\"][0]))\\"
+      },
+      \\"phone\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.firebase[\\\\\\"phone\\\\\\"][1]))\\"
+      },
+      \\"google_com\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.firebase[\\\\\\"google.com\\\\\\"][2]))\\"
+      },
+      \\"facebook_com\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.firebase[\\\\\\"facebook.com\\\\\\"][3]))\\"
+      },
+      \\"github_com\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.firebase[\\\\\\"github.com\\\\\\"][4]))\\"
+      },
+      \\"twitter_com\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() === auth.token.firebase[\\\\\\"twitter.com\\\\\\"][5]))\\"
+      },
+      \\"$other\\": {
+        \\".validate\\": false
+      }
+    },
     \\"$other\\": {
       \\".validate\\": false
     }

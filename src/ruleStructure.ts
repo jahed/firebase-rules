@@ -44,6 +44,8 @@ const props = (node: RuleNode): RuleNodeFactory => otherNode => {
  * ```
  * { "$id": { ".validate": "$id === auth.uid" } }
  * ```
+ *
+ * https://firebase.google.com/docs/reference/security/database#location
  */
 const param = (key: string, fn: (key: RuleString) => RuleNode): RuleNodeFactory => otherNode => {
   if (!key.startsWith('$')) {

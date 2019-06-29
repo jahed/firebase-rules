@@ -12,7 +12,7 @@ export type RuleNode = { [key: string]: RuleNode | string | boolean | string[] }
 
 export type Rules = { rules: RuleNode }
 
-export type RuleString = RuleExpression<string, string> & {
+export type RuleString<T extends string = string> = RuleExpression<T, string> & {
   matches: (regexp: RegExp) => RuleExpression<boolean, string>;
   contains: (substr: string) => RuleExpression<boolean, string>;
   length: RuleExpression<number, string>;
@@ -31,6 +31,45 @@ export type RuleDataSnapshot = {
   child: (...parts: PrimitiveOrExpression<string, string>[]) => RuleDataSnapshot;
 }
 
+export type RuleSignInProvider = (
+  'custom' |
+  'password' |
+  'phone' |
+  'anonymous' |
+  'google.com' |
+  'facebook.com' |
+  'github.com' |
+  'twitter.com'
+)
+
+export type RuleAuthTokenFirebase = {
+  identities: {
+    'email': RuleString[]
+    'phone': RuleString[]
+    'google.com': RuleString[]
+    'facebook.com': RuleString[]
+    'github.com': RuleString[]
+    'twitter.com': RuleString[]
+  },
+  sign_in_provider: RuleString<RuleSignInProvider>
+}
+
+export type RuleAuthToken = {
+  email: RuleString;
+  email_verified: RuleExpression<boolean, string>;
+  phone_number: RuleString;
+  name: RuleString;
+  sub: RuleString;
+  firebase: RuleAuthTokenFirebase;
+  iss: RuleString;
+  aud: RuleString;
+  auth_time: RuleExpression<number, string>;
+  iat: RuleExpression<number, string>;
+  exp: RuleExpression<number, string>;
+}
+
 export type RuleAuth = {
   uid: RuleString;
+  provider: RuleString;
+  token: RuleAuthToken;
 }

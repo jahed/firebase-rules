@@ -341,8 +341,71 @@ const rules = (): Rules => ({
           )
         ))
       ))
+    ),
+    authTest: node(
+      props({
+        uid: node(validate(newData.isString(newVal => equal(newVal, auth.uid)))),
+        provider: node(validate(newData.isString(newVal => equal(newVal, auth.provider))))
+      })
+    ),
+    authTokenTest: node(
+      props({
+        email: node(validate(newData.isString(newVal => equal(newVal, auth.token.email)))),
+        email_verified: node(validate(newData.isBoolean(newVal => equal(newVal, auth.token.email_verified)))),
+        phone_number: node(validate(newData.isString(newVal => equal(newVal, auth.token.phone_number)))),
+        name: node(validate(newData.isString(newVal => equal(newVal, auth.token.name)))),
+        sub: node(validate(newData.isString(newVal => equal(newVal, auth.token.sub)))),
+        iss: node(validate(newData.isString(newVal => equal(newVal, auth.token.iss)))),
+        aud: node(validate(newData.isString(newVal => equal(newVal, auth.token.aud)))),
+        auth_time: node(validate(newData.isNumber(newVal => equal(newVal, auth.token.auth_time)))),
+        iat: node(validate(newData.isNumber(newVal => equal(newVal, auth.token.iat)))),
+        exp: node(validate(newData.isNumber(newVal => equal(newVal, auth.token.exp))))
+      })
+    ),
+    authTokenFirebaseTest: node(
+      props({
+        sign_in_provider: node(validate(newData.isString(newVal => equal(newVal, auth.token.firebase.sign_in_provider))))
+      })
+    ),
+    authTokenFirebaseIdentitiesTest: node(
+      props({
+        email: node(validate(newData.isString(newVal => equal(newVal, auth.token.firebase.identities.email[0])))),
+        phone: node(validate(newData.isString(newVal => equal(newVal, auth.token.firebase.identities.phone[1])))),
+        'google_com': node(validate(newData.isString(newVal => equal(newVal, auth.token.firebase.identities['google.com'][2])))),
+        'facebook_com': node(validate(newData.isString(newVal => equal(newVal, auth.token.firebase.identities['facebook.com'][3])))),
+        'github_com': node(validate(newData.isString(newVal => equal(newVal, auth.token.firebase.identities['github.com'][4])))),
+        'twitter_com': node(validate(newData.isString(newVal => equal(newVal, auth.token.firebase.identities['twitter.com'][5]))))
+      })
     )
   }))
 })
 
 export { rules }
+
+/**
+const createRuleAuthTokenFirebase = (name: string): RuleAuthTokenFirebase => ({
+  identities: {
+    'email': createRuleStringArray(`${name}["email"]`),
+    'phone': createRuleStringArray(`${name}["phone"]`),
+    'google.com': createRuleStringArray(`${name}["google.com"]`),
+    'facebook.com': createRuleStringArray(`${name}["facebook.com"]`),
+    'github.com': createRuleStringArray(`${name}["github.com"]`),
+    'twitter.com': createRuleStringArray(`${name}["twitter.com"]`)
+  },
+  sign_in_provider: createRuleString(`${name}.sign_in_provider`)
+})
+
+const createRuleAuthToken = (name: string): RuleAuthToken => ({
+  email: createRuleString(`${name}.email`),
+  email_verified: () => `${name}.email_verified`,
+  phone_number: createRuleString(`${name}.phone_number`),
+  name: createRuleString(`${name}.name`),
+  sub: createRuleString(`${name}.sub`),
+  firebase: createRuleAuthTokenFirebase(`${name}.firebase`),
+  iss: createRuleString(`${name}.iss`),
+  aud: createRuleString(`${name}.aud`),
+  auth_time: () => `${name}.auth_time`,
+  iat: () => `${name}.iat`,
+  exp: () => `${name}.exp`
+})
+ */
