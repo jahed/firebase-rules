@@ -36,7 +36,7 @@ exports[`json rules are up-to-date 1`] = `
         \\".validate\\": false
       },
       \\".read\\": true,
-      \\".write\\": \\"(auth.uid === \\\\\\"service-admin\\\\\\")\\"
+      \\".write\\": false
     },
     \\"bookmarks\\": {
       \\"$userId\\": {
@@ -48,7 +48,7 @@ exports[`json rules are up-to-date 1`] = `
             \\".validate\\": \\"(newData.isString() && ((newData.val().length > 0) && (newData.val().length < 1000)))\\"
           },
           \\"created_at\\": {
-            \\".validate\\": \\"(newData.isNumber() && (!data.exists() || (data.val() === newData.val())))\\"
+            \\".validate\\": \\"(newData.isNumber() && (!data.exists() || (data.isNumber() && (data.val() === newData.val()))))\\"
           },
           \\"$other\\": {
             \\".validate\\": false
@@ -65,7 +65,7 @@ exports[`json rules are up-to-date 1`] = `
         \\"$gameId\\": {
           \\"$nodeId\\": {
             \\".write\\": \\"($userId === auth.uid)\\",
-            \\".validate\\": \\"(newData.isNumber() && (!data.exists() || (data.val() === newData.val())))\\"
+            \\".validate\\": \\"(newData.isNumber() && (!data.exists() || (data.isNumber() && (data.val() === newData.val()))))\\"
           },
           \\".read\\": true,
           \\".validate\\": \\"root.child(\\\\\\"games/\\\\\\" + $gameId).exists()\\"
@@ -77,7 +77,7 @@ exports[`json rules are up-to-date 1`] = `
       \\"$gameId\\": {
         \\"$userId\\": {
           \\".write\\": \\"($userId === auth.uid)\\",
-          \\".validate\\": \\"(newData.isNumber() && (!data.exists() || (newData.val() > data.val())))\\"
+          \\".validate\\": \\"(newData.isNumber() && (!data.exists() || (data.isNumber() && (newData.val() > data.val()))))\\"
         },
         \\".validate\\": \\"root.child(\\\\\\"games/\\\\\\" + $gameId).exists()\\",
         \\".read\\": true,
@@ -181,7 +181,7 @@ exports[`json rules are up-to-date 1`] = `
           \\".validate\\": \\"(newData.isString() && ((newData.val().length > 0) && (newData.val().length < 24)))\\"
         },
         \\"created_at\\": {
-          \\".validate\\": \\"(newData.isNumber() && (!data.exists() || (data.val() === newData.val())))\\"
+          \\".validate\\": \\"(newData.isNumber() && (!data.exists() || (data.isNumber() && (data.val() === newData.val()))))\\"
         },
         \\"avatar_id\\": {
           \\".validate\\": \\"(newData.isString() && (newData.val().matches(/^[0-9a-z-]+$/) && (newData.val().length < 32)))\\"
@@ -207,14 +207,14 @@ exports[`json rules are up-to-date 1`] = `
       \\"$gameId\\": {
         \\".read\\": false,
         \\".write\\": false,
-        \\".validate\\": \\"(newData.val() === true)\\"
+        \\".validate\\": \\"(newData.isBoolean() && (newData.val() === true))\\"
       }
     },
     \\"gamePosts\\": {
       \\"$gameId\\": {
         \\"$postId\\": {
-          \\".write\\": \\"((root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/userId\\\\\\").val() === auth.uid) && (root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/gameId\\\\\\").val() === $gameId))\\",
-          \\".validate\\": \\"(!data.exists() && (newData.val() === now))\\"
+          \\".write\\": \\"((root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/userId\\\\\\").isString() && (root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/userId\\\\\\").val() === auth.uid)) && (root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/gameId\\\\\\").isString() && (root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/gameId\\\\\\").val() === $gameId)))\\",
+          \\".validate\\": \\"(!data.exists() && (newData.isNumber() && (newData.val() === now)))\\"
         },
         \\".indexOn\\": [
           \\".value\\"
@@ -226,8 +226,8 @@ exports[`json rules are up-to-date 1`] = `
     \\"userPosts\\": {
       \\"$userId\\": {
         \\"$postId\\": {
-          \\".write\\": \\"(($userId === auth.uid) && (root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/userId\\\\\\").val() === auth.uid))\\",
-          \\".validate\\": \\"(!data.exists() && (newData.val() === now))\\"
+          \\".write\\": \\"(($userId === auth.uid) && (root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/userId\\\\\\").isString() && (root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/userId\\\\\\").val() === auth.uid)))\\",
+          \\".validate\\": \\"(!data.exists() && (newData.isNumber() && (newData.val() === now)))\\"
         },
         \\".indexOn\\": [
           \\".value\\"
@@ -240,8 +240,8 @@ exports[`json rules are up-to-date 1`] = `
       \\"$gameId\\": {
         \\"$userId\\": {
           \\"$postId\\": {
-            \\".write\\": \\"((root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/userId\\\\\\").val() === auth.uid) && (root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/gameId\\\\\\").val() === $gameId))\\",
-            \\".validate\\": \\"(!data.exists() && (newData.val() === now))\\"
+            \\".write\\": \\"((root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/userId\\\\\\").isString() && (root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/userId\\\\\\").val() === auth.uid)) && (root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/gameId\\\\\\").isString() && (root.child(\\\\\\"posts/\\\\\\" + $postId + \\\\\\"/gameId\\\\\\").val() === $gameId)))\\",
+            \\".validate\\": \\"(!data.exists() && (newData.isNumber() && (newData.val() === now)))\\"
           },
           \\".indexOn\\": [
             \\".value\\"
@@ -255,8 +255,8 @@ exports[`json rules are up-to-date 1`] = `
     \\"postReplies\\": {
       \\"$postId\\": {
         \\"$replyId\\": {
-          \\".write\\": \\"((root.child(\\\\\\"posts/\\\\\\" + $replyId + \\\\\\"/userId\\\\\\").val() === auth.uid) && (root.child(\\\\\\"posts/\\\\\\" + $replyId + \\\\\\"/parentId\\\\\\").val() === $postId))\\",
-          \\".validate\\": \\"(!data.exists() && (newData.val() === now))\\"
+          \\".write\\": \\"((root.child(\\\\\\"posts/\\\\\\" + $replyId + \\\\\\"/userId\\\\\\").isString() && (root.child(\\\\\\"posts/\\\\\\" + $replyId + \\\\\\"/userId\\\\\\").val() === auth.uid)) && (root.child(\\\\\\"posts/\\\\\\" + $replyId + \\\\\\"/parentId\\\\\\").isString() && (root.child(\\\\\\"posts/\\\\\\" + $replyId + \\\\\\"/parentId\\\\\\").val() === $postId)))\\",
+          \\".validate\\": \\"(!data.exists() && (newData.isNumber() && (newData.val() === now)))\\"
         },
         \\".indexOn\\": [
           \\".value\\"
@@ -268,19 +268,19 @@ exports[`json rules are up-to-date 1`] = `
     \\"posts\\": {
       \\"$postId\\": {
         \\"createdAt\\": {
-          \\".validate\\": \\"((data.exists() && (newData.val() === data.val())) || (!data.exists() && (newData.val() === now)))\\"
+          \\".validate\\": \\"((data.exists() && (newData.isNumber() && (data.isNumber() && (newData.val() === data.val())))) || (!data.exists() && (newData.isNumber() && (newData.val() === now))))\\"
         },
         \\"updatedAt\\": {
-          \\".validate\\": \\"(newData.val() === now)\\"
+          \\".validate\\": \\"(newData.isNumber() && (newData.val() === now))\\"
         },
         \\"userId\\": {
-          \\".validate\\": \\"((data.exists() && (newData.val() === data.val())) || (!data.exists() && root.child(\\\\\\"users/\\\\\\" + newData.val()).exists()))\\"
+          \\".validate\\": \\"((data.exists() && (newData.isString() && (data.isString() && (newData.val() === data.val())))) || (!data.exists() && (newData.isString() && root.child(\\\\\\"users/\\\\\\" + newData.val()).exists())))\\"
         },
         \\"gameId\\": {
-          \\".validate\\": \\"((data.exists() && (newData.val() === data.val())) || (!data.exists() && root.child(\\\\\\"games/\\\\\\" + newData.val()).exists()))\\"
+          \\".validate\\": \\"((data.exists() && (newData.isString() && (data.isString() && (newData.val() === data.val())))) || (!data.exists() && (newData.isString() && root.child(\\\\\\"games/\\\\\\" + newData.val()).exists())))\\"
         },
         \\"parentId\\": {
-          \\".validate\\": \\"((root.child(\\\\\\"posts/\\\\\\" + $postId).exists() && (newData.val() === data.val())) || (!root.child(\\\\\\"posts/\\\\\\" + $postId).exists() && (!newData.exists() || root.child(\\\\\\"posts/\\\\\\" + newData.val()).exists())))\\"
+          \\".validate\\": \\"((root.child(\\\\\\"posts/\\\\\\" + $postId).exists() && (newData.isString() && (data.isString() && (newData.val() === data.val())))) || (!root.child(\\\\\\"posts/\\\\\\" + $postId).exists() && (!newData.exists() || (newData.isString() && root.child(\\\\\\"posts/\\\\\\" + newData.val()).exists()))))\\"
         },
         \\"body\\": {
           \\".validate\\": \\"(newData.isString() && ((newData.val().length > 0) && (newData.val().length < 1024)))\\"
@@ -289,24 +289,24 @@ exports[`json rules are up-to-date 1`] = `
           \\".validate\\": false
         },
         \\".read\\": true,
-        \\".write\\": \\"((newData.child(\\\\\\"userId\\\\\\").val() === auth.uid) && (root.child(\\\\\\"postRequests/\\\\\\" + auth.uid + \\\\\\"/postId\\\\\\").val() === $postId))\\",
+        \\".write\\": \\"((newData.child(\\\\\\"userId\\\\\\").isString() && (newData.child(\\\\\\"userId\\\\\\").val() === auth.uid)) && (root.child(\\\\\\"postRequests/\\\\\\" + auth.uid + \\\\\\"/postId\\\\\\").isString() && (root.child(\\\\\\"postRequests/\\\\\\" + auth.uid + \\\\\\"/postId\\\\\\").val() === $postId)))\\",
         \\".validate\\": \\"(!data.exists() && newData.hasChildren([\\\\\\"createdAt\\\\\\",\\\\\\"updatedAt\\\\\\",\\\\\\"userId\\\\\\",\\\\\\"gameId\\\\\\",\\\\\\"body\\\\\\"]))\\"
       }
     },
     \\"postRequests\\": {
       \\"$userId\\": {
         \\"createdAt\\": {
-          \\".validate\\": \\"(newData.val() === now)\\"
+          \\".validate\\": \\"(newData.isNumber() && (newData.val() === now))\\"
         },
         \\"postId\\": {
-          \\".validate\\": \\"!root.child(\\\\\\"posts/\\\\\\" + newData.val()).exists()\\"
+          \\".validate\\": \\"!(newData.isString() && root.child(\\\\\\"posts/\\\\\\" + newData.val()).exists())\\"
         },
         \\"$other\\": {
           \\".validate\\": false
         },
         \\".read\\": \\"($userId === auth.uid)\\",
         \\".write\\": \\"($userId === auth.uid)\\",
-        \\".validate\\": \\"(newData.hasChildren([\\\\\\"createdAt\\\\\\"]) && (!data.exists() || (data.child(\\\\\\"createdAt\\\\\\").val() < (now - root.child(\\\\\\"app/postDelay\\\\\\").val()))))\\"
+        \\".validate\\": \\"(newData.hasChildren([\\\\\\"createdAt\\\\\\"]) && (!data.exists() || (data.child(\\\\\\"createdAt\\\\\\").isNumber() && (root.child(\\\\\\"app/postDelay\\\\\\").isNumber() && (data.child(\\\\\\"createdAt\\\\\\").val() < (now - root.child(\\\\\\"app/postDelay\\\\\\").val()))))))\\"
       }
     },
     \\"$other\\": {

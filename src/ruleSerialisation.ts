@@ -5,7 +5,7 @@ import { PrimitiveOrExpression, RuleExpression } from './types'
  *
  * `toJSONString(equal(a, b))` renders `"(a === b)"`
  */
-const toJSONString = <T>(a: PrimitiveOrExpression<T> | string[]): string => {
+const toJSONString = <T>(a: PrimitiveOrExpression<T> | T[]): string => {
   if (typeof a === 'function') {
     return `${(a as RuleExpression<T>)()}`
   }

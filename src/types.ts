@@ -12,24 +12,25 @@ export type RuleNode = { [key: string]: RuleNode | string | boolean | string[] }
 
 export type Rules = { rules: RuleNode }
 
-export type RuleString = RuleExpression<string> & {
-  matches: (regexp: RegExp) => RuleExpression<boolean>;
-  contains: (substr: string) => RuleExpression<boolean>;
-  length: RuleExpression<number>;
+export type RuleString = RuleExpression<string, string> & {
+  matches: (regexp: RegExp) => RuleExpression<boolean, string>;
+  contains: (substr: string) => RuleExpression<boolean, string>;
+  length: RuleExpression<number, string>;
 }
 
-export type StringRule = (val: RuleString) => RuleExpression<boolean>
+export type StringRule = (val: RuleString) => RuleExpression<boolean, string>
+export type BooleanRule = (val: RuleExpression<boolean, string>) => RuleExpression<boolean, string>
+export type NumberRule = (val: RuleExpression<number, string>) => RuleExpression<boolean, string>
 
-export type RuleDataSnapshot<ValueType> = {
-  isString: (rule?: StringRule) => RuleExpression<boolean>;
-  isBoolean: () => RuleExpression<boolean>;
-  isNumber: () => RuleExpression<boolean>;
-  exists: () => RuleExpression<boolean>;
-  val: () => RuleExpression<ValueType>;
-  hasChildren: (keys: string[]) => RuleExpression<boolean>;
-  child: <ChildValueType> (...parts: PrimitiveOrExpression<string>[]) => RuleDataSnapshot<ChildValueType>;
+export type RuleDataSnapshot = {
+  isString: (rule?: StringRule) => RuleExpression<boolean, string>;
+  isBoolean: (rule?: BooleanRule) => RuleExpression<boolean, string>;
+  isNumber: (rule?: NumberRule) => RuleExpression<boolean, string>;
+  exists: () => RuleExpression<boolean, string>;
+  hasChildren: (keys: string[]) => RuleExpression<boolean, string>;
+  child: (...parts: PrimitiveOrExpression<string, string>[]) => RuleDataSnapshot;
 }
 
 export type RuleAuth = {
-  uid: RuleExpression<string>;
+  uid: RuleString;
 }
