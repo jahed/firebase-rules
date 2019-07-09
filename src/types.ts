@@ -22,13 +22,24 @@ export type StringRule = (val: RuleString) => RuleExpression<boolean, string>
 export type BooleanRule = (val: RuleExpression<boolean, string>) => RuleExpression<boolean, string>
 export type NumberRule = (val: RuleExpression<number, string>) => RuleExpression<boolean, string>
 
+export type OptionalValueRule<T> = (rule?: T) => RuleExpression<boolean, string>
+export type ValueRule<T> = (rule: T) => RuleExpression<boolean, string>
+
+export type RulePriority = RuleExpression<number | string | null, string> & {
+  assumingString: ValueRule<StringRule>;
+  assumingNumber: ValueRule<NumberRule>;
+}
+
 export type RuleDataSnapshot = {
-  isString: (rule?: StringRule) => RuleExpression<boolean, string>;
-  isBoolean: (rule?: BooleanRule) => RuleExpression<boolean, string>;
-  isNumber: (rule?: NumberRule) => RuleExpression<boolean, string>;
-  exists: () => RuleExpression<boolean, string>;
-  hasChildren: (keys: string[]) => RuleExpression<boolean, string>;
   child: (...parts: PrimitiveOrExpression<string, string>[]) => RuleDataSnapshot;
+  parent: () => RuleDataSnapshot;
+  hasChild: (key: string) => RuleExpression<boolean, string>;
+  hasChildren: (keys: string[]) => RuleExpression<boolean, string>;
+  exists: () => RuleExpression<boolean, string>;
+  getPriority: () => RulePriority;
+  isNumber: OptionalValueRule<NumberRule>;
+  isString: OptionalValueRule<StringRule>;
+  isBoolean: OptionalValueRule<BooleanRule>;
 }
 
 export type RuleSignInProvider = (

@@ -376,6 +376,18 @@ const rules = (): Rules => ({
         'github_com': node(validate(newData.isString(newVal => equal(newVal, auth.token.firebase.identities['github.com'][4])))),
         'twitter_com': node(validate(newData.isString(newVal => equal(newVal, auth.token.firebase.identities['twitter.com'][5]))))
       })
+    ),
+    dataSnapshotTest: node(
+      props({
+        child: node(validate(equal(newData.child('unknown'), null)))
+      })
+    ),
+    priorityTest: node(
+      props({
+        priority: node(validate(equal(newData.getPriority(), null))),
+        number: node(validate(newData.getPriority().assumingNumber(priority => lessThan(priority, 10)))),
+        string: node(validate(newData.getPriority().assumingString(priority => equal(priority.length, 5))))
+      })
     )
   }))
 })
