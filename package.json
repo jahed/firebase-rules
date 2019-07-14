@@ -1,6 +1,6 @@
 {
   "name": "@jahed/firebase-rules",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "A type-safe Firebase Real-time Database Security Rules builder.",
   "main": "lib/index.js",
   "module": "es/index.js",
