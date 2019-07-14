@@ -1,6 +1,6 @@
 # @jahed/firebase-rules
 
-[![Travis](https://img.shields.io/travis/jahed/firebase-rules.svg)](https://travis-ci.org/jahed/firebase-rules)
+[![Travis](https://img.shields.io/travis/jahed/firebase-rules.svg?branch=master)](https://travis-ci.org/jahed/firebase-rules)
 [![npm](https://img.shields.io/npm/v/@jahed/firebase-rules.svg)](https://www.npmjs.com/package/@jahed/firebase-rules)
 [![Patreon](https://img.shields.io/badge/patreon-donate-f96854.svg)](https://www.patreon.com/jahed)
 [![Liberapay](https://img.shields.io/badge/liberapay-donate-d9b113.svg)](https://liberapay.com/jahed)
