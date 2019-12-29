@@ -27,15 +27,15 @@
     "deps": "yarn upgrade-interactive --latest && yarn upgrade && git add yarn.lock '*package.json' && git commit -m 'build(deps): upgrade dependencies'"
   },
   "devDependencies": {
-    "@types/jest": "24.0.15",
+    "@types/jest": "24.0.25",
     "@types/node": "12.6.2",
-    "jest": "24.8.0",
-    "rimraf": "2.6.3",
-    "ts-jest": "24.0.2",
-    "tslint": "5.18.0",
-    "tslint-config-standard": "8.0.1",
-    "typedoc": "0.14.2",
-    "typescript": "3.5.3"
+    "jest": "24.9.0",
+    "rimraf": "3.0.0",
+    "ts-jest": "24.2.0",
+    "tslint": "5.20.1",
+    "tslint-config-standard": "9.0.0",
+    "typedoc": "0.15.6",
+    "typescript": "3.7.4"
   },
   "keywords": [
     "firebase",
