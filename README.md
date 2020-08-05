@@ -4,17 +4,19 @@
 [![npm](https://img.shields.io/npm/v/@jahed/firebase-rules.svg)](https://www.npmjs.com/package/@jahed/firebase-rules)
 [![Patreon](https://img.shields.io/badge/patreon-donate-f96854.svg)](https://www.patreon.com/jahed)
 [![Liberapay](https://img.shields.io/badge/liberapay-donate-d9b113.svg)](https://liberapay.com/jahed)
+[![PayPal](https://img.shields.io/badge/paypal-donate-009cde.svg)](https://paypal.me/jahed/5)
 
 A type-safe Firebase Real-time Database Security Rules builder.
+
+- Compose and re-use common rules.
+- Reference constants used throughout the project.
+- Catch any errors and typos.
+- Auto-completion.
 
 ## Installation
 
 ```bash
-# NPM
 npm install --save-dev @jahed/firebase-rules
-
-# Yarn
-yarn add --dev @jahed/firebase-rules
 ```
 
 ## Usage
@@ -125,4 +127,4 @@ For complete API documentation, [see the documentation website](https://jahed.gi
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE).
