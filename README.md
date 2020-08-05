@@ -24,7 +24,7 @@ to reduce reptition and give your rules more context. For this example, we'll
 just use the modules directly to keep it simple.
 
 ```typescript
-import { node, props, validate, newData, read, write, equal } from '@jahed/firebase-rules'
+import { node, props, validate, newData, read, write, equal, auth, allowAll, param, between, oneOf, not, data } from '@jahed/firebase-rules'
 
 const rules = {
   rules: node(props({
@@ -87,7 +87,12 @@ above will look like this in JSON:
       },
       "delay": {
         ".validate": "newData.isNumber()"
-      }
+      },
+      "$other": {
+        ".validate": false
+      },
+      ".read": true,
+      ".write": "(auth.uid === \"service-admin\")"
     },
     "users": {
       "$userId": {
@@ -104,6 +109,9 @@ above will look like this in JSON:
         ".validate": "newData.hasChildren([\"name\",\"created_at\"])"
       },
       ".read": true
+    },
+    "$other": {
+      ".validate": false
     }
   }
 }
