@@ -27,8 +27,8 @@
     "deps": "yarn upgrade-interactive --latest && yarn upgrade && git add yarn.lock '*package.json' && git commit -m 'build(deps): upgrade dependencies'"
   },
   "devDependencies": {
-    "@types/jest": "26.0.14",
-    "@types/node": "12.6.2",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^12.6.2",
     "jest": "26.4.2",
     "rimraf": "3.0.2",
     "ts-jest": "26.3.0",
