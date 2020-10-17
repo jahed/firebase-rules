@@ -1,5 +1,5 @@
 import { toJSONString } from './ruleSerialisation'
-import { RuleString } from './types'
+import { PrimitiveOrExpression, RuleString } from './types'
 
 /**
  * A representation of a Firebase Rule String.
@@ -9,7 +9,7 @@ import { RuleString } from './types'
 const createRuleString = (name: string): RuleString => {
   const str = (): string => name
   str.matches = (regex: RegExp) => () => `${name}.matches(${regex.toString()})`
-  str.contains = (substr: string) => () => `${name}.contains(${toJSONString(substr)})`
+  str.contains = (substr: PrimitiveOrExpression<string>) => () => `${name}.contains(${toJSONString(substr)})`
 
   // .length is a readonly value, so force it.
   Object.defineProperty(str, 'length', {

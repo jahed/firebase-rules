@@ -376,6 +376,17 @@ const rules = (): Rules => ({
         'github_com': node(validate(newData.isString(newVal => equal(newVal, auth.token.firebase.identities['github.com'][4])))),
         'twitter_com': node(validate(newData.isString(newVal => equal(newVal, auth.token.firebase.identities['twitter.com'][5]))))
       })
+    ),
+    stringTest: node(
+      props({
+        contains: node(
+          param('$id', $id => node(
+            props({
+              param: node(validate(newData.isString(val => val.contains($id))))
+            })
+          ))
+        )
+      })
     )
   }))
 })

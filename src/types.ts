@@ -14,7 +14,7 @@ export type Rules = { rules: RuleNode }
 
 export type RuleString<T extends string = string> = RuleExpression<T, string> & {
   matches: (regexp: RegExp) => RuleExpression<boolean, string>;
-  contains: (substr: string) => RuleExpression<boolean, string>;
+  contains: (substr: PrimitiveOrExpression<string>) => RuleExpression<boolean, string>;
   length: RuleExpression<number, string>;
 }
 

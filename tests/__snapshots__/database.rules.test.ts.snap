@@ -386,6 +386,21 @@ exports[`json rules are up-to-date 1`] = `
         \\".validate\\": false
       }
     },
+    \\"stringTest\\": {
+      \\"contains\\": {
+        \\"$id\\": {
+          \\"param\\": {
+            \\".validate\\": \\"(newData.isString() && newData.val().contains($id))\\"
+          },
+          \\"$other\\": {
+            \\".validate\\": false
+          }
+        }
+      },
+      \\"$other\\": {
+        \\".validate\\": false
+      }
+    },
     \\"$other\\": {
       \\".validate\\": false
     }
