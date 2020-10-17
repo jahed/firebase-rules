@@ -1,0 +1,380 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@jahed/firebase-rules</title>
+	<meta name="description" content="Documentation for @jahed/firebase-rules">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@jahed/firebase-rules</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>@jahed/firebase-rules</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#jahedfirebase-rules" id="jahedfirebase-rules" style="color: inherit; text-decoration: none;">
+					<h1>@jahed/firebase-rules</h1>
+				</a>
+				<p><a href="https://travis-ci.org/jahed/firebase-rules"><img src="https://img.shields.io/travis/jahed/firebase-rules.svg?branch=master" alt="Travis"></a>
+					<a href="https://www.npmjs.com/package/@jahed/firebase-rules"><img src="https://img.shields.io/npm/v/@jahed/firebase-rules.svg" alt="npm"></a>
+					<a href="https://www.patreon.com/jahed"><img src="https://img.shields.io/badge/patreon-donate-f96854.svg" alt="Patreon"></a>
+					<a href="https://liberapay.com/jahed"><img src="https://img.shields.io/badge/liberapay-donate-d9b113.svg" alt="Liberapay"></a>
+				<a href="https://paypal.me/jahed/5"><img src="https://img.shields.io/badge/paypal-donate-009cde.svg" alt="PayPal"></a></p>
+				<p>A type-safe Firebase Real-time Database Security Rules builder.</p>
+				<ul>
+					<li>Compose and re-use common rules.</li>
+					<li>Reference constants used throughout the project.</li>
+					<li>Catch any errors and typos.</li>
+					<li>Auto-completion.</li>
+				</ul>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<pre><code class="language-bash">npm install --save-dev @jahed/firebase-rules</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<p>Import the modules you need to build your rules. You can create helper functions
+					to reduce reptition and give your rules more context. For this example, we&#39;ll
+				just use the modules directly to keep it simple.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { node, props, validate, newData, read, write, equal, auth, allowAll, param, between, oneOf, not, data } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@jahed/firebase-rules&#x27;</span>
+
+<span class="hljs-keyword">const</span> rules = {
+  <span class="hljs-attr">rules</span>: node(props({
+    <span class="hljs-attr">app</span>: node(
+      props({
+        <span class="hljs-attr">update</span>: node(props({
+          <span class="hljs-attr">version</span>: node(validate(newData.isString())),
+          <span class="hljs-attr">force</span>: node(validate(newData.isBoolean())),
+          <span class="hljs-attr">timestamp</span>: node(validate(newData.isNumber()))
+        })),
+        <span class="hljs-attr">delay</span>: node(validate(newData.isNumber()))
+      }),
+      read(allowAll),
+      write(equal(auth.uid, <span class="hljs-string">&#x27;service-admin&#x27;</span>))
+    ),
+    <span class="hljs-attr">users</span>: node(
+      param(<span class="hljs-string">&#x27;$userId&#x27;</span>, $userId =&gt; node(
+        props({
+          <span class="hljs-attr">name</span>: node(validate(
+            newData.isString(<span class="hljs-function"><span class="hljs-params">val</span> =&gt;</span> between(val.length, <span class="hljs-number">0</span>, <span class="hljs-number">24</span>))
+          )),
+          <span class="hljs-attr">created_at</span>: node(validate(
+            newData.isNumber(<span class="hljs-function"><span class="hljs-params">newVal</span> =&gt;</span> oneOf(
+              not(data.exists()),
+              data.isNumber(<span class="hljs-function"><span class="hljs-params">val</span> =&gt;</span> equal(val, newVal))
+            ))
+          ))
+        }),
+        write(equal($userId, auth.uid)),
+        validate(newData.hasChildren([<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;created_at&#x27;</span>]))
+      )),
+      read(allowAll)
+    )
+  }))
+}
+
+<span class="hljs-keyword">const</span> json = <span class="hljs-built_in">JSON</span>.stringify(rules, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>)</code></pre>
+				<p>Now you can write <code>json</code> to a file and push it to Firebase. The configuration
+				above will look like this in JSON:</p>
+				<pre><code class="language-json">{
+  <span class="hljs-attr">&quot;rules&quot;</span>: {
+    <span class="hljs-attr">&quot;app&quot;</span>: {
+      <span class="hljs-attr">&quot;update&quot;</span>: {
+        <span class="hljs-attr">&quot;version&quot;</span>: {
+          <span class="hljs-attr">&quot;.validate&quot;</span>: <span class="hljs-string">&quot;newData.isString()&quot;</span>
+        },
+        <span class="hljs-attr">&quot;force&quot;</span>: {
+          <span class="hljs-attr">&quot;.validate&quot;</span>: <span class="hljs-string">&quot;newData.isBoolean()&quot;</span>
+        },
+        <span class="hljs-attr">&quot;timestamp&quot;</span>: {
+          <span class="hljs-attr">&quot;.validate&quot;</span>: <span class="hljs-string">&quot;newData.isNumber()&quot;</span>
+        },
+        <span class="hljs-attr">&quot;$other&quot;</span>: {
+          <span class="hljs-attr">&quot;.validate&quot;</span>: <span class="hljs-literal">false</span>
+        }
+      },
+      <span class="hljs-attr">&quot;delay&quot;</span>: {
+        <span class="hljs-attr">&quot;.validate&quot;</span>: <span class="hljs-string">&quot;newData.isNumber()&quot;</span>
+      },
+      <span class="hljs-attr">&quot;$other&quot;</span>: {
+        <span class="hljs-attr">&quot;.validate&quot;</span>: <span class="hljs-literal">false</span>
+      },
+      <span class="hljs-attr">&quot;.read&quot;</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">&quot;.write&quot;</span>: <span class="hljs-string">&quot;(auth.uid === \&quot;service-admin\&quot;)&quot;</span>
+    },
+    <span class="hljs-attr">&quot;users&quot;</span>: {
+      <span class="hljs-attr">&quot;$userId&quot;</span>: {
+        <span class="hljs-attr">&quot;name&quot;</span>: {
+          <span class="hljs-attr">&quot;.validate&quot;</span>: <span class="hljs-string">&quot;(newData.isString() &amp;&amp; ((newData.val().length &gt; 0) &amp;&amp; (newData.val().length &lt; 24)))&quot;</span>
+        },
+        <span class="hljs-attr">&quot;created_at&quot;</span>: {
+          <span class="hljs-attr">&quot;.validate&quot;</span>: <span class="hljs-string">&quot;(newData.isNumber() &amp;&amp; (!data.exists() || (data.isNumber() &amp;&amp; (data.val() === newData.val()))))&quot;</span>
+        },
+        <span class="hljs-attr">&quot;$other&quot;</span>: {
+          <span class="hljs-attr">&quot;.validate&quot;</span>: <span class="hljs-literal">false</span>
+        },
+        <span class="hljs-attr">&quot;.write&quot;</span>: <span class="hljs-string">&quot;($userId === auth.uid)&quot;</span>,
+        <span class="hljs-attr">&quot;.validate&quot;</span>: <span class="hljs-string">&quot;newData.hasChildren([\&quot;name\&quot;,\&quot;created_at\&quot;])&quot;</span>
+      },
+      <span class="hljs-attr">&quot;.read&quot;</span>: <span class="hljs-literal">true</span>
+    },
+    <span class="hljs-attr">&quot;$other&quot;</span>: {
+      <span class="hljs-attr">&quot;.validate&quot;</span>: <span class="hljs-literal">false</span>
+    }
+  }
+}</code></pre>
+				<p>For more thorough examples, see <a href="tests/database.rules.ts">the tests</a>.</p>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
+				<p>For complete API documentation, <a href="https://jahed.github.io/firebase-rules/">see the documentation website</a>.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p><a href="LICENSE">MIT</a>.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#booleanrule" class="tsd-kind-icon">Boolean<wbr>Rule</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#indexfield" class="tsd-kind-icon">Index<wbr>Field</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#indexruletype" class="tsd-kind-icon">Index<wbr>Rule<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#numberrule" class="tsd-kind-icon">Number<wbr>Rule</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#primitiveorexpression" class="tsd-kind-icon">Primitive<wbr>OrExpression</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#ruleauth" class="tsd-kind-icon">Rule<wbr>Auth</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#ruleauthtoken" class="tsd-kind-icon">Rule<wbr>Auth<wbr>Token</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#ruleauthtokenfirebase" class="tsd-kind-icon">Rule<wbr>Auth<wbr>Token<wbr>Firebase</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#ruledatasnapshot" class="tsd-kind-icon">Rule<wbr>Data<wbr>Snapshot</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#ruleexpression" class="tsd-kind-icon">Rule<wbr>Expression</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#rulenode" class="tsd-kind-icon">Rule<wbr>Node</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#rulenodefactory" class="tsd-kind-icon">Rule<wbr>Node<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#rulesigninprovider" class="tsd-kind-icon">Rule<wbr>Sign<wbr>InProvider</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#rulestring" class="tsd-kind-icon">Rule<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#ruletype" class="tsd-kind-icon">Rule<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#rules" class="tsd-kind-icon">Rules</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#stringrule" class="tsd-kind-icon">String<wbr>Rule</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#auth" class="tsd-kind-icon">auth</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#data" class="tsd-kind-icon">data</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#newdata" class="tsd-kind-icon">new<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#root" class="tsd-kind-icon">root</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#value" class="tsd-kind-icon">value</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#add" class="tsd-kind-icon">add</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#allof" class="tsd-kind-icon">all<wbr>Of</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#allowall" class="tsd-kind-icon">allow<wbr>All</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#between" class="tsd-kind-icon">between</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#concat" class="tsd-kind-icon">concat</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createruleauth" class="tsd-kind-icon">create<wbr>Rule<wbr>Auth</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createruleauthtoken" class="tsd-kind-icon">create<wbr>Rule<wbr>Auth<wbr>Token</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createruleauthtokenfirebase" class="tsd-kind-icon">create<wbr>Rule<wbr>Auth<wbr>Token<wbr>Firebase</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createruledatasnapshot" class="tsd-kind-icon">create<wbr>Rule<wbr>Data<wbr>Snapshot</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#createruleprimitive" class="tsd-kind-icon">create<wbr>Rule<wbr>Primitive</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createrulestring" class="tsd-kind-icon">create<wbr>Rule<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createrulestringarray" class="tsd-kind-icon">create<wbr>Rule<wbr>String<wbr>Array</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#denyall" class="tsd-kind-icon">deny<wbr>All</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#divide" class="tsd-kind-icon">divide</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#equal" class="tsd-kind-icon">equal</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#greaterthan" class="tsd-kind-icon">greater<wbr>Than</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#indexon" class="tsd-kind-icon">index<wbr>On</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#lessthan" class="tsd-kind-icon">less<wbr>Than</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#modulus" class="tsd-kind-icon">modulus</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#multiply" class="tsd-kind-icon">multiply</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#negate" class="tsd-kind-icon">negate</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#node" class="tsd-kind-icon">node</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#not" class="tsd-kind-icon">not</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#now" class="tsd-kind-icon">now</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#oneof" class="tsd-kind-icon">one<wbr>Of</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#param" class="tsd-kind-icon">param</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#props" class="tsd-kind-icon">props</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#read" class="tsd-kind-icon">read</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#subtract" class="tsd-kind-icon">subtract</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#tojsonstring" class="tsd-kind-icon">toJSONString</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#validate" class="tsd-kind-icon">validate</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#write" class="tsd-kind-icon">write</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
