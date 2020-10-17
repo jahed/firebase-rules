@@ -72,7 +72,6 @@ const add = (...args: PrimitiveOrExpression<number>[]): RuleExpression<number> =
   return () => `(${args.map(s => toJSONString(s)).join(' + ')})`
 }
 
-
 /**
  * Calculates `b` subtracted from `a` and so on.
  *
