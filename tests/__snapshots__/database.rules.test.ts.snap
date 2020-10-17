@@ -392,10 +392,39 @@ exports[`json rules are up-to-date 1`] = `
           \\"param\\": {
             \\".validate\\": \\"(newData.isString() && newData.val().contains($id))\\"
           },
+          \\"concat\\": {
+            \\".validate\\": \\"(newData.isString() && newData.val().contains((\\\\\\"h=\\\\\\" + $id)))\\"
+          },
           \\"$other\\": {
             \\".validate\\": false
           }
         }
+      },
+      \\"$other\\": {
+        \\".validate\\": false
+      }
+    },
+    \\"operatorTest\\": {
+      \\"add\\": {
+        \\".validate\\": \\"(newData.isNumber() && (newData.val() + 1 + 2 + 3))\\"
+      },
+      \\"subtract\\": {
+        \\".validate\\": \\"(newData.isNumber() && (newData.val() - 1 - 2 - 3))\\"
+      },
+      \\"multiply\\": {
+        \\".validate\\": \\"(newData.isNumber() && (newData.val() - 1 - 2 - 3))\\"
+      },
+      \\"divide\\": {
+        \\".validate\\": \\"(newData.isNumber() && (newData.val() / 1 / 2 / 3))\\"
+      },
+      \\"modulus\\": {
+        \\".validate\\": \\"(newData.isNumber() && (newData.val() % 1 % 2 % 3))\\"
+      },
+      \\"negate\\": {
+        \\".validate\\": \\"(newData.isNumber() && (-(newData.val())))\\"
+      },
+      \\"concat\\": {
+        \\".validate\\": \\"(newData.isString() && (newData.val() + \\\\\\"one\\\\\\" + \\\\\\"two\\\\\\" + \\\\\\"three\\\\\\"))\\"
       },
       \\"$other\\": {
         \\".validate\\": false

@@ -64,12 +64,58 @@ const lessThan = (a: PrimitiveOrExpression<number>, b: PrimitiveOrExpression<num
 }
 
 /**
- * Calculates `b` subtracted from `a`.
+ * Calculates `b` added to `a` and so on.
  *
- * `subtract(a, b)` is equivalent to `a - b`.
+ * `add(a, b, c, ...)` is equivalent to `a + b + c ...`.
  */
-const subtract = (a: PrimitiveOrExpression<number>, b: PrimitiveOrExpression<number>): RuleExpression<number> => {
-  return () => `(${toJSONString(a)} - ${toJSONString(b)})`
+const add = (...args: PrimitiveOrExpression<number>[]): RuleExpression<number> => {
+  return () => `(${args.map(s => toJSONString(s)).join(' + ')})`
+}
+
+
+/**
+ * Calculates `b` subtracted from `a` and so on.
+ *
+ * `subtract(a, b, c, ...)` is equivalent to `a - b - c ...`.
+ */
+const subtract = (...args: PrimitiveOrExpression<number>[]): RuleExpression<number> => {
+  return () => `(${args.map(s => toJSONString(s)).join(' - ')})`
+}
+
+/**
+ * Negates `a`.
+ *
+ * `negate(a)` is equivalent to `-a`.
+ */
+const negate = (a: PrimitiveOrExpression<number>): RuleExpression<number> => {
+  return () => `(-(${toJSONString(a)}))`
+}
+
+/**
+ * Calculates `b` multiplied by `a` and so on.
+ *
+ * `multiply(a, b, c, ...)` is equivalent to `a * b * c ...`.
+ */
+const multiply = (...args: PrimitiveOrExpression<number>[]): RuleExpression<number> => {
+  return () => `(${args.map(s => toJSONString(s)).join(' - ')})`
+}
+
+/**
+ * Calculates `b` divided by `a` and so on.
+ *
+ * `divide(a, b, c, ...)` is equivalent to `a / b / c ...`.
+ */
+const divide = (...args: PrimitiveOrExpression<number>[]): RuleExpression<number> => {
+  return () => `(${args.map(s => toJSONString(s)).join(' / ')})`
+}
+
+/**
+ * Calculates `a` modulus `b` and so on.
+ *
+ * `modulus(a, b, c, ...)` is equivalent to `a % b % c ...`.
+ */
+const modulus = (...args: PrimitiveOrExpression<number>[]): RuleExpression<number> => {
+  return () => `(${args.map(s => toJSONString(s)).join(' % ')})`
 }
 
 /**
@@ -84,4 +130,13 @@ const between = (value: PrimitiveOrExpression<number>, lower: PrimitiveOrExpress
   )
 }
 
-export { equal, oneOf, allOf, subtract, between, lessThan, greaterThan, not }
+/**
+ * Calculates `b` concatenated to `a` and so on.
+ *
+ * `concat(a, b, ...)` is equivalent to `a + b + c + ...`.
+ */
+const concat = (...args: PrimitiveOrExpression<string>[]): RuleExpression<string> => {
+  return () => `(${args.map(s => toJSONString(s)).join(' + ')})`
+}
+
+export { equal, oneOf, allOf, add, subtract, multiply, divide, modulus, between, lessThan, greaterThan, not, negate, concat }

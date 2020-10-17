@@ -1,4 +1,4 @@
-import { allOf, allowAll, auth, between, data, denyAll, equal, greaterThan, indexOn, lessThan, newData, node, not, now, oneOf, param, props, read, root, subtract, validate, value, write } from '../src'
+import { allOf, allowAll, auth, between, data, denyAll, equal, greaterThan, indexOn, lessThan, newData, node, not, now, oneOf, param, props, read, root, subtract, validate, value, write, concat, add, multiply, divide, modulus, negate } from '../src'
 import { Rules } from '../src/types'
 
 const rules = (): Rules => ({
@@ -382,12 +382,24 @@ const rules = (): Rules => ({
         contains: node(
           param('$id', $id => node(
             props({
-              param: node(validate(newData.isString(val => val.contains($id))))
+              param: node(validate(newData.isString(val => val.contains($id)))),
+              concat: node(validate(newData.isString(val => val.contains(concat('h=', $id)))))
             })
           ))
         )
       })
-    )
+    ),
+    operatorTest: node(
+      props({
+        add: node(validate(newData.isNumber(newVal => add(newVal, 1, 2, 3)))),
+        subtract: node(validate(newData.isNumber(newVal => subtract(newVal, 1, 2, 3)))),
+        multiply: node(validate(newData.isNumber(newVal => multiply(newVal, 1, 2, 3)))),
+        divide: node(validate(newData.isNumber(newVal => divide(newVal, 1, 2, 3)))),
+        modulus: node(validate(newData.isNumber(newVal => modulus(newVal, 1, 2, 3)))),
+        negate: node(validate(newData.isNumber(newVal => negate(newVal)))),
+        concat: node(validate(newData.isString(newVal => concat(newVal, 'one', 'two', 'three'))))
+      })
+    ),
   }))
 })
 

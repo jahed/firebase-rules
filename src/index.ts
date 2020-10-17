@@ -1,4 +1,4 @@
-export { allOf, between, equal, greaterThan, lessThan, not, oneOf, subtract } from './ruleOperators'
+export { allOf, between, equal, greaterThan, lessThan, not, oneOf, add, subtract, multiply, divide, modulus, negate, concat } from './ruleOperators'
 export { allowAll, denyAll } from './rules'
 export { node, param, props } from './ruleStructure'
 export { indexOn, read, validate, value, write } from './ruleTypes'
