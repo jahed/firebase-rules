@@ -1,6 +1,6 @@
-import { createRuleAuth } from './ruleAuth'
-import { createRuleDataSnapshot } from './ruleDataSnapshot'
-import { RuleAuth, RuleExpression } from './types'
+import { createRuleAuth } from './ruleAuth.ts'
+import { createRuleDataSnapshot } from './ruleDataSnapshot.ts'
+import type { RuleAuth, RuleExpression } from './types.ts'
 
 /**
  * Representation of `auth` for use in rule expressions.

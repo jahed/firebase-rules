@@ -1,4 +1,4 @@
-import { PrimitiveOrExpression, RuleExpression } from './types'
+import type { PrimitiveOrExpression, RuleExpression } from './types.ts'
 
 /**
  * Converts a `RuleExpression` to its JSON string form.

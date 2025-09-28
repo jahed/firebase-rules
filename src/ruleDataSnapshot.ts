@@ -1,8 +1,8 @@
-import { toJSONString } from './ruleSerialisation'
-import { PrimitiveOrExpression, RuleDataSnapshot, RuleExpression } from './types'
-import { allOf } from './ruleOperators'
-import { createRuleString } from './ruleString'
-import { createRulePrimitive } from './rulePrimitive'
+import { toJSONString } from './ruleSerialisation.ts'
+import type { PrimitiveOrExpression, RuleDataSnapshot, RuleExpression } from './types.ts'
+import { allOf } from './ruleOperators.ts'
+import { createRuleString } from './ruleString.ts'
+import { createRulePrimitive } from './rulePrimitive.ts'
 
 /**
  * Creates a representation of a Firebase RuleDataSnapshots for use in rules.

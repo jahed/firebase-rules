@@ -1,4 +1,4 @@
-import { RuleExpression } from './types'
+import type { RuleExpression } from './types.ts'
 
 /**
  * Returns a strictly `true` expression.

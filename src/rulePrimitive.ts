@@ -1,4 +1,4 @@
-import { RuleExpression } from './types'
+import type { RuleExpression } from './types.ts'
 
 /**
  * A representation of a Firebase Rule primitive such as a number or boolean.

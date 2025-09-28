@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "./tsconfig.json",
+  ],
+  "compilerOptions": {
+    "outDir": "./lib/",
+    "declaration": true,
+    "sourceMap": true,
+    "noEmit": false,
+    "resolveJsonModule": false
+  },
+  "include": ["src"],
+  "exclude": ["**/*.test.ts"]
+}

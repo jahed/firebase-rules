@@ -1,5 +1,5 @@
-import { toJSONString } from './ruleSerialisation'
-import { PrimitiveOrExpression, RuleString } from './types'
+import { toJSONString } from './ruleSerialisation.ts'
+import type { PrimitiveOrExpression, RuleString } from './types.ts'
 
 /**
  * A representation of a Firebase Rule String.

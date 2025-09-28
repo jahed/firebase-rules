@@ -2,39 +2,57 @@
   "name": "@jahed/firebase-rules",
   "version": "1.1.0",
   "description": "A type-safe Firebase Real-time Database Security Rules builder.",
+  "type": "module",
   "main": "lib/index.js",
-  "module": "es/index.js",
+  "module": "lib/index.js",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js",
+      "types": "./lib/*.d.ts"
+    },
+    "./*.js": {
+      "types": "./lib/*.d.ts",
+      "default": "./lib/*.js"
+    },
+    "./ts": {
+      "default": "./src/index.ts"
+    },
+    "./*.ts": {
+      "default": "./src/*.ts"
+    }
+  },
   "files": [
     "lib",
-    "es",
+    "src",
     "docs"
   ],
   "sideEffects": false,
   "author": "Jahed Ahmed",
   "license": "MIT",
-  "repository": "https://github.com/jahed/firebase-rules",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jahed/firebase-rules.git"
+  },
+  "bugs": "https://github.com/jahed/firebase-rules/issues",
+  "funding": "https://jahed.dev/donate",
   "scripts": {
-    "lint": "tslint --project tsconfig.json",
-    "test": "jest",
-    "build:lib": "rm -rf lib && tsc",
-    "build:es": "rm -rf es && tsc --outDir ./es/ --target es6 --module es6",
-    "build:docs": "rm -rf docs && typedoc --theme default --out docs --mode file",
-    "push:git": "git push --follow-tags",
-    "push:docs": "bash -i ./publish-docs.sh",
-    "ready": "yarn lint && yarn test && yarn build:lib && yarn build:es && yarn build:docs",
-    "deploy": "yarn ready && yarn publish && yarn push:git && yarn push:docs",
-    "deps": "yarn upgrade-interactive --latest && yarn upgrade && git add yarn.lock '*package.json' && git commit -m 'build(deps): upgrade dependencies'"
+    "format": "prettier -w .",
+    "lint": "tsc -p tsconfig.json",
+    "test": "npm run test:node -- --test './**/*.test.ts'",
+    "test:update": "npm run test:node -- --test-update-snapshots --test './**/*.test.ts'",
+    "test:file": "npm run test:node -- --test",
+    "test:node": "node --disable-warning=ExperimentalWarning --experimental-strip-types --experimental-test-isolation=none --test-timeout=5000",
+    "build": "rm -rf lib && tsc -p tsconfig.lib.json"
+  },
+  "engines": {
+    "node": ">=22.11.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.14",
-    "@types/node": "^12.6.2",
-    "jest": "26.5.3",
-    "ts-jest": "26.4.1",
-    "tslint": "6.1.3",
-    "tslint-config-standard": "9.0.0",
-    "typedoc": "0.19.2",
-    "typescript": "4.0.3"
+    "@tsconfig/node-ts": "^23.6.1",
+    "@tsconfig/node22": "^22.0.2",
+    "@types/node": "^22.18.6",
+    "typescript": "5.9.x"
   },
   "keywords": [
     "firebase",

@@ -1,5 +1,5 @@
-import { allOf, allowAll, auth, between, data, denyAll, equal, greaterThan, indexOn, lessThan, newData, node, not, now, oneOf, param, props, read, root, subtract, validate, value, write, concat, add, multiply, divide, modulus, negate } from '../src'
-import { Rules } from '../src/types'
+import { allOf, allowAll, auth, between, data, denyAll, equal, greaterThan, indexOn, lessThan, newData, node, not, now, oneOf, param, props, read, root, subtract, validate, value, write, concat, add, multiply, divide, modulus, negate } from '../src/index.ts'
+import type { Rules } from '../src/types.ts'
 
 const rules = (): Rules => ({
   rules: node(props({

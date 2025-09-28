@@ -1,23 +1,17 @@
 {
-  "compilerOptions": {
-    "outDir": "./lib/",
-    "target": "es2015",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "pretty": true,
-    "sourceMap": true,
-    "declaration": true,
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": [
-    "src"
+  "extends": [
+    "@tsconfig/node22/tsconfig.json",
+    "@tsconfig/node-ts/tsconfig.json"
   ],
-  "exclude": [
-    "**/*.test.ts"
-  ]
+  "compilerOptions": {
+    "lib": [
+      "es2024",
+      "ESNext.Array",
+      "ESNext.Collection",
+      "ESNext.Iterator",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "noEmit": true
+  }
 }

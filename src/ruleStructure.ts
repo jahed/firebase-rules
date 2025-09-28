@@ -1,5 +1,5 @@
-import { createRuleString } from './ruleString'
-import { RuleNode, RuleNodeFactory, RuleString } from './types'
+import { createRuleString } from './ruleString.ts'
+import type { RuleNode, RuleNodeFactory, RuleString } from './types.ts'
 
 /**
  * Defines multiple properties with their own rules.

@@ -1,4 +1,4 @@
-import { IndexField, IndexRuleType, RuleType } from './types'
+import type { IndexField, IndexRuleType, RuleType } from './types.ts'
 
 /**
  * Creates a `.read` rule with the given `expression`.

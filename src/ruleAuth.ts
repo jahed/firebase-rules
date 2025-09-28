@@ -1,5 +1,5 @@
-import { createRuleString, createRuleStringArray } from './ruleString'
-import { RuleAuth, RuleAuthToken, RuleAuthTokenFirebase } from './types'
+import { createRuleString, createRuleStringArray } from './ruleString.ts'
+import type { RuleAuth, RuleAuthToken, RuleAuthTokenFirebase } from './types.ts'
 
 const createRuleAuthTokenFirebase = (name: string): RuleAuthTokenFirebase => ({
   identities: {

@@ -1,5 +1,5 @@
-import { toJSONString } from './ruleSerialisation'
-import { PrimitiveOrExpression, RuleExpression } from './types'
+import { toJSONString } from './ruleSerialisation.ts'
+import type { PrimitiveOrExpression, RuleExpression } from './types.ts'
 
 /**
  * Does an equality check between `a` and `b`.
