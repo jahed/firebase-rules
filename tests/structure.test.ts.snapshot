@@ -1,0 +1,13 @@
+exports[`param 1`] = `
+{
+  "$userId": {
+    "name": {
+      ".validate": "newData.isString()"
+    },
+    "$other": {
+      ".validate": false
+    },
+    ".write": "(auth.uid === $userId)"
+  }
+}
+`;
