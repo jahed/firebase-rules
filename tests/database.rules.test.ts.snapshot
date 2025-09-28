@@ -127,7 +127,7 @@ exports[`json rules are up-to-date 1`] = `
     },
     "probeGuides": {
       "$userId": {
-        "$probe_guide": {
+        "$probeGuide": {
           "name": {
             ".validate": "(newData.isString() && ((newData.val().length > 0) && (newData.val().length < 50)))"
           },

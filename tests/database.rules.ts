@@ -55,9 +55,9 @@ export const rules = (): Rules => ({
         write(denyAll),
       ),
       bookmarks: node(
-        param("$userId", ($userId) =>
+        param(($userId) =>
           node(
-            param("$pathname", () =>
+            param(($pathname) =>
               node(
                 props({
                   name: node(
@@ -93,11 +93,11 @@ export const rules = (): Rules => ({
         ),
       ),
       completedNodes: node(
-        param("$userId", ($userId) =>
+        param(($userId) =>
           node(
-            param("$gameId", ($gameId) =>
+            param(($gameId) =>
               node(
-                param("$nodeId", () =>
+                param(($nodeId) =>
                   node(
                     write(equal($userId, auth.uid)),
                     validate(
@@ -119,9 +119,9 @@ export const rules = (): Rules => ({
         ),
       ),
       gameUsers: node(
-        param("$gameId", ($gameId) =>
+        param(($gameId) =>
           node(
-            param("$userId", ($userId) =>
+            param(($userId) =>
               node(
                 write(equal($userId, auth.uid)),
                 validate(
@@ -141,7 +141,7 @@ export const rules = (): Rules => ({
         ),
       ),
       notes: node(
-        param("$userId", ($userId) =>
+        param(($userId) =>
           node(
             props({
               text: node(
@@ -161,7 +161,7 @@ export const rules = (): Rules => ({
         ),
       ),
       preferences: node(
-        param("$userId", ($userId) =>
+        param(($userId) =>
           node(
             props({
               audio: node(validate(root.child("users/", $userId).exists())),
@@ -181,9 +181,9 @@ export const rules = (): Rules => ({
         ),
       ),
       probeGuides: node(
-        param("$userId", ($userId) =>
+        param(($userId) =>
           node(
-            param("$probe_guide", () =>
+            param(($probeGuide) =>
               node(
                 props({
                   name: node(
@@ -192,7 +192,7 @@ export const rules = (): Rules => ({
                     ),
                   ),
                   siteProbeMap: node(
-                    param("$siteNumber", ($siteNumber) =>
+                    param(($siteNumber) =>
                       node(
                         validate(
                           allOf(
@@ -214,9 +214,9 @@ export const rules = (): Rules => ({
         ),
       ),
       userGames: node(
-        param("$userId", ($userId) =>
+        param(($userId) =>
           node(
-            param("$gameId", ($gameId) =>
+            param(($gameId) =>
               node(
                 props({
                   playState: node(
@@ -255,7 +255,7 @@ export const rules = (): Rules => ({
         ),
       ),
       users: node(
-        param("$userId", ($userId) =>
+        param(($userId) =>
           node(
             props({
               name: node(
@@ -308,7 +308,7 @@ export const rules = (): Rules => ({
         read(allowAll),
       ),
       games: node(
-        param("$gameId", () =>
+        param(($gameId) =>
           node(
             read(denyAll),
             write(denyAll),
@@ -317,9 +317,9 @@ export const rules = (): Rules => ({
         ),
       ),
       gamePosts: node(
-        param("$gameId", ($gameId) =>
+        param(($gameId) =>
           node(
-            param("$postId", ($postId) =>
+            param(($postId) =>
               node(
                 write(
                   allOf(
@@ -346,9 +346,9 @@ export const rules = (): Rules => ({
         ),
       ),
       userPosts: node(
-        param("$userId", ($userId) =>
+        param(($userId) =>
           node(
-            param("$postId", ($postId) =>
+            param(($postId) =>
               node(
                 write(
                   allOf(
@@ -373,11 +373,11 @@ export const rules = (): Rules => ({
         ),
       ),
       gameUserPosts: node(
-        param("$gameId", ($gameId) =>
+        param(($gameId) =>
           node(
-            param("$userId", ($userId) =>
+            param(($userId) =>
               node(
-                param("$postId", ($postId) =>
+                param(($postId) =>
                   node(
                     write(
                       allOf(
@@ -407,9 +407,9 @@ export const rules = (): Rules => ({
         ),
       ),
       postReplies: node(
-        param("$postId", ($postId) =>
+        param(($postId) =>
           node(
-            param("$replyId", ($replyId) =>
+            param(($replyId) =>
               node(
                 write(
                   allOf(
@@ -436,7 +436,7 @@ export const rules = (): Rules => ({
         ),
       ),
       posts: node(
-        param("$postId", ($postId) =>
+        param(($postId) =>
           node(
             props({
               createdAt: node(
@@ -546,7 +546,7 @@ export const rules = (): Rules => ({
         ),
       ),
       postRequests: node(
-        param("$userId", ($userId) =>
+        param(($userId) =>
           node(
             props({
               createdAt: node(
@@ -717,7 +717,7 @@ export const rules = (): Rules => ({
       stringTest: node(
         props({
           contains: node(
-            param("$id", ($id) =>
+            param(($id) =>
               node(
                 props({
                   param: node(

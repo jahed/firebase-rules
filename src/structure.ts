@@ -49,19 +49,24 @@ export const props =
  *
  * https://firebase.google.com/docs/reference/security/database#location
  */
-export const param = (
-  key: string,
-  fn: (key: RuleString) => RuleNode,
-): RuleNodeFactory => {
+export const param = (fn: ($key: RuleString) => RuleNode): RuleNodeFactory => {
   return (otherNode) => {
-    if (!key.startsWith("$")) {
-      throw new Error(`parameter key "${key}" must start with "$"`);
+    const key = extractParamKey(fn);
+    if (!key) {
+      throw new Error(
+        `param($key => ...) must have take only one parameter starting with $.`,
+      );
     }
     return {
       ...otherNode,
       [key]: fn(createRuleString(key)),
     };
   };
+};
+
+export const extractParamKey = (fn: Function): string | undefined => {
+  const [, key] = /(\$[^\s,)]+)/.exec(fn.toString()) || [];
+  return key;
 };
 
 export const node = (...factories: RuleNodeFactory[]): RuleNode => {
