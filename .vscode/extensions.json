@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "connor4312.nodejs-testing",
+    "oderwat.indent-rainbow",
+    "github.vscode-github-actions"
+  ]
+}

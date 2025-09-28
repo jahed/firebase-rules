@@ -1,0 +1,19 @@
+import type { RuleExpression } from "./types.ts";
+
+/**
+ * A representation of a Firebase Rule primitive such as a number or boolean.
+ */
+export const createRulePrimitive = <T>(
+  name: string,
+): RuleExpression<T, string> => {
+  const val = (): string => name;
+
+  // .length is a readonly value, so force it.
+  Object.defineProperty(val, "length", {
+    get: () => () => {
+      throw new Error(`Primitive ${name} has no length.`);
+    },
+  });
+
+  return val;
+};

@@ -1,3 +1,37 @@
 {
-    "typescript.tsdk": "/home/jahed/repos/firebase-rules/node_modules/typescript/lib"
+  "search.exclude": {
+    "**/lib": true,
+    "**/artifacts": true,
+    "**/.tmp": true,
+    "**/package-lock.json": true
+  },
+  "editor.rulers": [{ "column": 80 }, { "column": 120 }],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
+  "editor.hover.delay": 1000,
+  "editor.quickSuggestionsDelay": 1000,
+  "workbench.hover.delay": 1000,
+  "indentRainbow.updateDelay": 1000,
+  "files.readonlyInclude": {
+    "package-lock.json": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+  "typescript.preferences.importModuleSpecifierEnding": "js",
+  "prettier.prettierPath": "./node_modules/prettier",
+  "nodejs-testing.include": ["./tests/"],
+  "nodejs-testing.extensions": [
+    {
+      "extensions": ["ts"],
+      "parameters": [
+        "--disable-warning=ExperimentalWarning",
+        "--experimental-strip-types",
+        "--experimental-test-isolation=none",
+        "--test-timeout=5000"
+      ]
+    }
+  ]
 }
