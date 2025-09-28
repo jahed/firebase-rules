@@ -56,7 +56,7 @@ export type NumberRule = (
   val: RuleExpression<number, string>,
 ) => RuleExpression<boolean, string>;
 
-export type RuleDataSnapshot = {
+export type RuleDataSnapshot = RuleExpression<object, string> & {
   isString: (rule?: StringRule) => RuleExpression<boolean, string>;
   isBoolean: (rule?: BooleanRule) => RuleExpression<boolean, string>;
   isNumber: (rule?: NumberRule) => RuleExpression<boolean, string>;

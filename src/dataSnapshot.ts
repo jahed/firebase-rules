@@ -4,9 +4,12 @@ import { createRuleBoolean, createRuleNumber } from "./primitive.ts";
 import { toJSONString } from "./serialise.ts";
 import { createRuleString } from "./string.ts";
 import type {
+  BooleanRule,
+  NumberRule,
   PrimitiveOrExpression,
   RuleDataSnapshot,
   RuleExpression,
+  StringRule,
 } from "./types.ts";
 
 /**
@@ -22,7 +25,7 @@ import type {
  */
 export const createRuleDataSnapshot = (name: string): RuleDataSnapshot => {
   return createRuleObject(name, {
-    isString: (valRule) => {
+    isString: (valRule?: StringRule) => {
       const baseRule: RuleExpression<boolean> = createRuleBoolean(
         `${name}.isString()`,
       );
@@ -30,13 +33,13 @@ export const createRuleDataSnapshot = (name: string): RuleDataSnapshot => {
         ? allOf(baseRule, valRule(createRuleString(`${name}.val()`)))
         : baseRule;
     },
-    isBoolean: (valRule) => {
+    isBoolean: (valRule?: BooleanRule) => {
       const baseRule = createRuleBoolean(`${name}.isBoolean()`);
       return valRule
         ? allOf(baseRule, valRule(createRuleBoolean(`${name}.val()`)))
         : baseRule;
     },
-    isNumber: (valRule) => {
+    isNumber: (valRule?: NumberRule) => {
       const baseRule = createRuleBoolean(`${name}.isNumber()`);
       return valRule
         ? allOf(baseRule, valRule(createRuleNumber(`${name}.val()`)))
@@ -45,7 +48,7 @@ export const createRuleDataSnapshot = (name: string): RuleDataSnapshot => {
     exists: () => {
       return createRuleBoolean(`${name}.exists()`);
     },
-    hasChildren: (keys) => {
+    hasChildren: (keys: string[]) => {
       return createRuleBoolean(`${name}.hasChildren(${toJSONString(keys)})`);
     },
     child: (...parts: PrimitiveOrExpression<string>[]) => {

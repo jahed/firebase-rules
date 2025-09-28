@@ -3,7 +3,7 @@ import type { RuleExpression, RuleObject, Serialised } from "./types.ts";
 /**
  * A Firebase Rule object such as string, data snapshot, auth.
  */
-export const createRuleObject = <T extends RuleObject, P extends {}>(
+export const createRuleObject = <T extends RuleObject, P extends object>(
   name: string,
   props: P,
 ): RuleExpression<T, string> & P => {
