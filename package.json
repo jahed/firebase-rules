@@ -27,7 +27,6 @@
     "src",
     "docs"
   ],
-  "sideEffects": false,
   "author": "Jahed Ahmed",
   "license": "MIT",
   "repository": {
