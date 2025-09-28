@@ -1,9 +1,10 @@
 declare const __brand: unique symbol;
 type Brand<B> = { [__brand]: B };
 
-export type RulePrimitive = number | boolean;
+export type RulePrimitive = number | boolean | null;
+export type RuleObject = string | object;
 
-export type ExpressionReturnType = RulePrimitive | string;
+export type ExpressionReturnType = RulePrimitive | RuleObject;
 export type ExpressionSerialisedType = string | boolean;
 
 export type Serialised<
@@ -102,7 +103,7 @@ export type RuleAuthToken = {
   exp: RuleExpression<number, string>;
 };
 
-export type RuleAuth = {
+export type RuleAuth = RuleExpression<object, string> & {
   uid: RuleString;
   provider: RuleString;
   token: RuleAuthToken;

@@ -1,11 +1,7 @@
+import { createRuleObject } from "./object.ts";
 import { createRuleNumber } from "./primitive.ts";
 import { toJSONString } from "./serialise.ts";
-import type {
-  PrimitiveOrExpression,
-  RuleExpression,
-  RuleString,
-  Serialised,
-} from "./types.ts";
+import type { PrimitiveOrExpression, RuleString, Serialised } from "./types.ts";
 
 /**
  * A representation of a Firebase Rule String.
@@ -15,18 +11,13 @@ import type {
 export const createRuleString = <T extends string>(
   name: string,
 ): RuleString<T> => {
-  const str = () => name as Serialised<T>;
-  str.matches = (regex: RegExp) => () =>
-    `${name}.matches(${regex.toString()})` as Serialised<boolean>;
-  str.contains = (substr: PrimitiveOrExpression<string>) => () =>
-    `${name}.contains(${toJSONString(substr)})` as Serialised<boolean>;
-
-  // .length is a readonly value, so force it.
-  Object.defineProperty(str, "length", {
-    get: () => createRuleNumber(`${name}.length`),
+  return createRuleObject(name, {
+    matches: (regex: RegExp) => () =>
+      `${name}.matches(${regex.toString()})` as Serialised<boolean>,
+    contains: (substr: PrimitiveOrExpression<string>) => () =>
+      `${name}.contains(${toJSONString(substr)})` as Serialised<boolean>,
+    length: createRuleNumber(`${name}.length`),
   });
-
-  return str as typeof str & { length: RuleExpression<number> };
 };
 
 export const createRuleStringArray = (name: string): RuleString[] => {

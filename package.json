@@ -43,7 +43,8 @@
     "test:update": "npm run test:node -- --test-update-snapshots --test './**/*.test.ts'",
     "test:file": "npm run test:node -- --test",
     "test:node": "node --disable-warning=ExperimentalWarning --experimental-strip-types --experimental-test-isolation=none --test-timeout=5000",
-    "build": "rm -rf lib && tsc -p tsconfig.lib.json"
+    "build": "rm -rf lib && tsc -p tsconfig.lib.json",
+    "all": "npm run test && npm run format && npm run lint && npm run build"
   },
   "engines": {
     "node": ">=22.11.0"

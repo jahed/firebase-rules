@@ -1,39 +1,41 @@
+export { allowAll, denyAll } from "./expression.ts";
+export { branch } from "./flow.ts";
 export {
+  add,
   allOf,
   between,
+  concat,
+  divide,
   equal,
   greaterThan,
   lessThan,
-  not,
-  oneOf,
-  add,
-  subtract,
-  multiply,
-  divide,
   modulus,
+  multiply,
   negate,
-  concat,
+  not,
+  notEqual,
+  oneOf,
+  subtract,
 } from "./operator.ts";
-export { allowAll, denyAll } from "./expression.ts";
-export { node, param, props } from "./structure.ts";
 export { indexOn, read, validate, value, write } from "./rule.ts";
-export { auth, data, newData, now, root } from "./variable.ts";
+export { node, param, props } from "./structure.ts";
 export type {
+  BooleanRule,
   IndexField,
   IndexRuleType,
+  NumberRule,
   PrimitiveOrExpression,
   RuleAuth,
+  RuleAuthToken,
+  RuleAuthTokenFirebase,
   RuleDataSnapshot,
   RuleExpression,
   RuleNode,
   RuleNodeFactory,
   Rules,
+  RuleSignInProvider,
   RuleString,
   RuleType,
   StringRule,
-  BooleanRule,
-  NumberRule,
-  RuleAuthToken,
-  RuleAuthTokenFirebase,
-  RuleSignInProvider,
 } from "./types.ts";
+export { auth, data, newData, now, root } from "./variable.ts";

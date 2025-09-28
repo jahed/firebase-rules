@@ -1,0 +1,15 @@
+exports[`auth !== null 1`] = `
+"(auth !== null)"
+`;
+
+exports[`auth === null 1`] = `
+"(auth === null)"
+`;
+
+exports[`data === null 1`] = `
+"(data === null)"
+`;
+
+exports[`newData === null 1`] = `
+"(newData === null)"
+`;

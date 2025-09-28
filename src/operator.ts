@@ -22,6 +22,18 @@ export const equal = <T extends ExpressionReturnType>(
 };
 
 /**
+ * Does an inequality check between `a` and `b`.
+ *
+ * `notEqual(a, b)` is equivalent to `a !== b`
+ */
+export const notEqual = <T extends ExpressionReturnType>(
+  a: PrimitiveOrExpression<T>,
+  b: PrimitiveOrExpression<T>,
+): RuleExpression<boolean> => {
+  return createRuleBoolean(`(${toJSONString(a)} !== ${toJSONString(b)})`);
+};
+
+/**
  * Requires all of its expressions to be `true`.
  *
  * `allOf(a, b, c)` is equivalent to `a && b && c`.
