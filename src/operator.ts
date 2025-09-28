@@ -1,16 +1,24 @@
+import { createRuleBoolean, createRuleNumber } from "./primitive.ts";
 import { toJSONString } from "./serialise.ts";
-import type { PrimitiveOrExpression, RuleExpression } from "./types.ts";
+import { createRuleString } from "./string.ts";
+import type {
+  ExpressionReturnType,
+  PrimitiveOrExpression,
+  RuleExpression,
+  RuleString,
+  Serialised,
+} from "./types.ts";
 
 /**
  * Does an equality check between `a` and `b`.
  *
  * `equal(a, b)` is equivalent to `a === b`
  */
-export const equal = <T>(
+export const equal = <T extends ExpressionReturnType>(
   a: PrimitiveOrExpression<T>,
   b: PrimitiveOrExpression<T>,
 ): RuleExpression<boolean> => {
-  return () => `(${toJSONString<T>(a)} === ${toJSONString<T>(b)})`;
+  return createRuleBoolean(`(${toJSONString(a)} === ${toJSONString(b)})`);
 };
 
 /**
@@ -27,7 +35,7 @@ export const allOf = (
     );
     console.warn(error);
   }
-  return () => "(" + expressions.map((v) => v()).join(" && ") + ")";
+  return createRuleBoolean(`(${expressions.map((v) => v()).join(" && ")})`);
 };
 
 /**
@@ -44,7 +52,7 @@ export const oneOf = (
     );
     console.warn(error);
   }
-  return () => "(" + expressions.map((v) => v()).join(" || ") + ")";
+  return createRuleBoolean(`(${expressions.map((v) => v()).join(" || ")})`);
 };
 
 /**
@@ -55,7 +63,7 @@ export const oneOf = (
 export const not = (
   expression: RuleExpression<boolean>,
 ): RuleExpression<boolean> => {
-  return () => "!" + expression();
+  return createRuleBoolean("!" + expression());
 };
 
 /**
@@ -67,7 +75,7 @@ export const greaterThan = (
   a: PrimitiveOrExpression<number>,
   b: PrimitiveOrExpression<number>,
 ): RuleExpression<boolean> => {
-  return () => `(${toJSONString(a)} > ${toJSONString(b)})`;
+  return createRuleBoolean(`(${toJSONString(a)} > ${toJSONString(b)})`);
 };
 
 /**
@@ -79,7 +87,7 @@ export const lessThan = (
   a: PrimitiveOrExpression<number>,
   b: PrimitiveOrExpression<number>,
 ): RuleExpression<boolean> => {
-  return () => `(${toJSONString(a)} < ${toJSONString(b)})`;
+  return createRuleBoolean(`(${toJSONString(a)} < ${toJSONString(b)})`);
 };
 
 /**
@@ -90,7 +98,7 @@ export const lessThan = (
 export const add = (
   ...args: PrimitiveOrExpression<number>[]
 ): RuleExpression<number> => {
-  return () => `(${args.map((s) => toJSONString(s)).join(" + ")})`;
+  return createRuleNumber(`(${args.map((s) => toJSONString(s)).join(" + ")})`);
 };
 
 /**
@@ -101,7 +109,8 @@ export const add = (
 export const subtract = (
   ...args: PrimitiveOrExpression<number>[]
 ): RuleExpression<number> => {
-  return () => `(${args.map((s) => toJSONString(s)).join(" - ")})`;
+  return () =>
+    `(${args.map((s) => toJSONString(s)).join(" - ")})` as Serialised<number>;
 };
 
 /**
@@ -112,7 +121,7 @@ export const subtract = (
 export const negate = (
   a: PrimitiveOrExpression<number>,
 ): RuleExpression<number> => {
-  return () => `(-(${toJSONString(a)}))`;
+  return () => `(-(${toJSONString(a)}))` as Serialised<number>;
 };
 
 /**
@@ -123,7 +132,8 @@ export const negate = (
 export const multiply = (
   ...args: PrimitiveOrExpression<number>[]
 ): RuleExpression<number> => {
-  return () => `(${args.map((s) => toJSONString(s)).join(" - ")})`;
+  return () =>
+    `(${args.map((s) => toJSONString(s)).join(" - ")})` as Serialised<number>;
 };
 
 /**
@@ -134,7 +144,8 @@ export const multiply = (
 export const divide = (
   ...args: PrimitiveOrExpression<number>[]
 ): RuleExpression<number> => {
-  return () => `(${args.map((s) => toJSONString(s)).join(" / ")})`;
+  return () =>
+    `(${args.map((s) => toJSONString(s)).join(" / ")})` as Serialised<number>;
 };
 
 /**
@@ -145,7 +156,8 @@ export const divide = (
 export const modulus = (
   ...args: PrimitiveOrExpression<number>[]
 ): RuleExpression<number> => {
-  return () => `(${args.map((s) => toJSONString(s)).join(" % ")})`;
+  return () =>
+    `(${args.map((s) => toJSONString(s)).join(" % ")})` as Serialised<number>;
 };
 
 /**
@@ -168,6 +180,6 @@ export const between = (
  */
 export const concat = (
   ...args: PrimitiveOrExpression<string>[]
-): RuleExpression<string> => {
-  return () => `(${args.map((s) => toJSONString(s)).join(" + ")})`;
+): RuleString<string> => {
+  return createRuleString(`(${args.map((s) => toJSONString(s)).join(" + ")})`);
 };

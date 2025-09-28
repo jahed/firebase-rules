@@ -1,12 +1,12 @@
+import { allOf } from "./operator.ts";
+import { createRuleBoolean, createRuleNumber } from "./primitive.ts";
 import { toJSONString } from "./serialise.ts";
+import { createRuleString } from "./string.ts";
 import type {
   PrimitiveOrExpression,
   RuleDataSnapshot,
   RuleExpression,
 } from "./types.ts";
-import { allOf } from "./operator.ts";
-import { createRuleString } from "./string.ts";
-import { createRulePrimitive } from "./primitive.ts";
 
 /**
  * Creates a representation of a Firebase RuleDataSnapshots for use in rules.
@@ -21,25 +21,31 @@ import { createRulePrimitive } from "./primitive.ts";
  */
 export const createRuleDataSnapshot = (name: string): RuleDataSnapshot => ({
   isString: (valRule) => {
-    const baseRule: RuleExpression<boolean> = () => `${name}.isString()`;
+    const baseRule: RuleExpression<boolean> = createRuleBoolean(
+      `${name}.isString()`,
+    );
     return valRule
       ? allOf(baseRule, valRule(createRuleString(`${name}.val()`)))
       : baseRule;
   },
   isBoolean: (valRule) => {
-    const baseRule: RuleExpression<boolean> = () => `${name}.isBoolean()`;
+    const baseRule = createRuleBoolean(`${name}.isBoolean()`);
     return valRule
-      ? allOf(baseRule, valRule(createRulePrimitive(`${name}.val()`)))
+      ? allOf(baseRule, valRule(createRuleBoolean(`${name}.val()`)))
       : baseRule;
   },
   isNumber: (valRule) => {
-    const baseRule: RuleExpression<boolean> = () => `${name}.isNumber()`;
+    const baseRule = createRuleBoolean(`${name}.isNumber()`);
     return valRule
-      ? allOf(baseRule, valRule(createRulePrimitive(`${name}.val()`)))
+      ? allOf(baseRule, valRule(createRuleNumber(`${name}.val()`)))
       : baseRule;
   },
-  exists: () => () => `${name}.exists()`,
-  hasChildren: (keys) => () => `${name}.hasChildren(${toJSONString(keys)})`,
+  exists: () => {
+    return createRuleBoolean(`${name}.exists()`);
+  },
+  hasChildren: (keys) => {
+    return createRuleBoolean(`${name}.hasChildren(${toJSONString(keys)})`);
+  },
   child: (...parts: PrimitiveOrExpression<string>[]) => {
     const key = parts.map((part) => toJSONString(part)).join(" + ");
     return createRuleDataSnapshot(`${name}.child(${key})`);

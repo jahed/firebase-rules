@@ -1,14 +1,28 @@
+declare const __brand: unique symbol;
+type Brand<B> = { [__brand]: B };
+
+export type RulePrimitive = number | boolean;
+
+export type ExpressionReturnType = RulePrimitive | string;
+export type ExpressionSerialisedType = string | boolean;
+
+export type Serialised<
+  ReturnType extends ExpressionReturnType = ExpressionReturnType,
+  SerialisedType extends ExpressionSerialisedType = string,
+> = SerialisedType & Brand<ReturnType>;
+
 export type RuleExpression<
-  _ReturnType = string | boolean | number,
-  SerialisedType = string,
-> = () => SerialisedType;
+  ReturnType extends ExpressionReturnType = ExpressionReturnType,
+  SerialisedType extends ExpressionSerialisedType = string,
+> = () => Serialised<ReturnType, SerialisedType>;
+
 export type PrimitiveOrExpression<
-  T = number | string | boolean,
-  R = string | boolean,
+  T extends ExpressionReturnType = ExpressionReturnType,
+  R extends ExpressionSerialisedType = ExpressionSerialisedType,
 > = T | RuleExpression<T, R>;
 
 export type RuleType = (
-  validator: RuleExpression<boolean, string | boolean>,
+  validator: RuleExpression<boolean, ExpressionSerialisedType>,
 ) => RuleNodeFactory;
 
 export type IndexRuleType = (...fields: IndexField[]) => RuleNodeFactory;

@@ -739,25 +739,47 @@ export const rules = (): Rules => ({
       operatorTest: node(
         props({
           add: node(
-            validate(newData.isNumber((newVal) => add(newVal, 1, 2, 3))),
+            validate(
+              newData.isNumber((newVal) =>
+                greaterThan(add(newVal, 1, 2, 3), 1),
+              ),
+            ),
           ),
           subtract: node(
-            validate(newData.isNumber((newVal) => subtract(newVal, 1, 2, 3))),
+            validate(
+              newData.isNumber((newVal) =>
+                lessThan(subtract(newVal, 1, 2, 3), 1),
+              ),
+            ),
           ),
           multiply: node(
-            validate(newData.isNumber((newVal) => multiply(newVal, 1, 2, 3))),
+            validate(
+              newData.isNumber((newVal) => equal(multiply(newVal, 1, 2, 3), 1)),
+            ),
           ),
           divide: node(
-            validate(newData.isNumber((newVal) => divide(newVal, 1, 2, 3))),
+            validate(
+              newData.isNumber((newVal) =>
+                greaterThan(divide(newVal, 1, 2, 3), 1),
+              ),
+            ),
           ),
           modulus: node(
-            validate(newData.isNumber((newVal) => modulus(newVal, 1, 2, 3))),
+            validate(
+              newData.isNumber((newVal) =>
+                greaterThan(modulus(newVal, 1, 2, 3), 1),
+              ),
+            ),
           ),
-          negate: node(validate(newData.isNumber((newVal) => negate(newVal)))),
+          negate: node(
+            validate(
+              newData.isNumber((newVal) => greaterThan(negate(newVal), 1)),
+            ),
+          ),
           concat: node(
             validate(
               newData.isString((newVal) =>
-                concat(newVal, "one", "two", "three"),
+                equal(concat(newVal, "one", "two", "three"), "hello"),
               ),
             ),
           ),

@@ -404,25 +404,25 @@ exports[`json rules are up-to-date 1`] = `
     },
     "operatorTest": {
       "add": {
-        ".validate": "(newData.isNumber() && (newData.val() + 1 + 2 + 3))"
+        ".validate": "(newData.isNumber() && ((newData.val() + 1 + 2 + 3) > 1))"
       },
       "subtract": {
-        ".validate": "(newData.isNumber() && (newData.val() - 1 - 2 - 3))"
+        ".validate": "(newData.isNumber() && ((newData.val() - 1 - 2 - 3) < 1))"
       },
       "multiply": {
-        ".validate": "(newData.isNumber() && (newData.val() - 1 - 2 - 3))"
+        ".validate": "(newData.isNumber() && ((newData.val() - 1 - 2 - 3) === 1))"
       },
       "divide": {
-        ".validate": "(newData.isNumber() && (newData.val() / 1 / 2 / 3))"
+        ".validate": "(newData.isNumber() && ((newData.val() / 1 / 2 / 3) > 1))"
       },
       "modulus": {
-        ".validate": "(newData.isNumber() && (newData.val() % 1 % 2 % 3))"
+        ".validate": "(newData.isNumber() && ((newData.val() % 1 % 2 % 3) > 1))"
       },
       "negate": {
-        ".validate": "(newData.isNumber() && (-(newData.val())))"
+        ".validate": "(newData.isNumber() && ((-(newData.val())) > 1))"
       },
       "concat": {
-        ".validate": "(newData.isString() && (newData.val() + \\"one\\" + \\"two\\" + \\"three\\"))"
+        ".validate": "(newData.isString() && ((newData.val() + \\"one\\" + \\"two\\" + \\"three\\") === \\"hello\\"))"
       },
       "$other": {
         ".validate": false

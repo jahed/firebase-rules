@@ -1,5 +1,6 @@
 import { createRuleAuth } from "./auth.ts";
 import { createRuleDataSnapshot } from "./dataSnapshot.ts";
+import { createRuleNumber } from "./primitive.ts";
 import type { RuleAuth, RuleExpression } from "./types.ts";
 
 /**
@@ -14,7 +15,7 @@ export const auth: RuleAuth = createRuleAuth("auth");
  *
  * https://firebase.google.com/docs/reference/security/database#now
  */
-export const now: RuleExpression<number> = () => "now";
+export const now: RuleExpression<number> = createRuleNumber("now");
 
 /**
  * Representation of `root` for use in rule expressions.
